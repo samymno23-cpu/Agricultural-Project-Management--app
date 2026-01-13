@@ -6,19 +6,20 @@
     <title>منظومة إدارة مزارع الزيتون</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
-        body { background-color: #f4f7f6; font-family: 'Segoe UI', sans-serif; }
-        .header-section { background: linear-gradient(135deg, #4b5d16, #2e3b1a); color: white; padding: 20px; border-radius: 0 0 25px 25px; box-shadow: 0 4px 12px rgba(0,0,0,0.2); }
+        body { background-color: #f0f4f3; font-family: 'Segoe UI', Tahoma, sans-serif; padding-bottom: 50px; }
+        .header-section { background: linear-gradient(135deg, #4b5d16, #2e3b1a); color: white; padding: 20px; border-radius: 0 0 25px 25px; box-shadow: 0 4px 12px rgba(0,0,0,0.2); margin-bottom: 20px; }
         .card { border-radius: 15px; border: none; box-shadow: 0 4px 8px rgba(0,0,0,0.05); margin-bottom: 20px; }
-        .btn-action { margin: 2px; border-radius: 8px; font-weight: 500; }
-        .stats-box { background: #fff; border-right: 5px solid #4b5d16; padding: 15px; text-align: center; }
-        .farm-title { font-weight: bold; color: #fff; text-decoration: underline; cursor: pointer; }
+        .btn-action { margin: 5px; border-radius: 10px; font-weight: 500; flex: 1 1 45%; }
+        .stats-box { background: #fff; border-right: 5px solid #4b5d16; padding: 15px; text-align: center; border-radius: 10px; }
+        .modal-content { border-radius: 20px; border: none; }
+        .modal-header { background-color: #4b5d16; color: white; border-radius: 20px 20px 0 0; }
+        .farm-title { font-weight: bold; color: #fff; text-decoration: underline; cursor: pointer; font-size: 1.4rem; }
     </style>
 </head>
 <body>
 
 <div class="header-section text-center">
     <h3 id="farmDisplayTitle" class="farm-title" onclick="renameFarm()">المزرعة رقم (1)</h3>
-    <p class="small">اضغط على الاسم لتعديله</p>
     <select id="farmSelect" class="form-select w-75 mx-auto mt-2" onchange="switchFarm()">
         <option value="farm1">المزرعة الأولى</option>
         <option value="farm2">المزرعة الثانية</option>
@@ -26,30 +27,26 @@
     </select>
 </div>
 
-<div class="container mt-4">
-    <div class="row g-3 mb-4">
-        <div class="col-6"><div class="stats-box"><span>محصول (كجم)</span><h4 id="inv_kg">0</h4></div></div>
-        <div class="col-6"><div class="stats-box" style="border-right-color: #8b4513;"><span>زيت (لتر)</span><h4 id="inv_lt">0</h4></div></div>
+<div class="container">
+    <div class="row g-2 mb-4">
+        <div class="col-6"><div class="stats-box"><span>محصول (كجم)</span><h4 id="inv_kg" class="text-success">0</h4></div></div>
+        <div class="col-6"><div class="stats-box" style="border-right-color: #8b4513;"><span>زيت (لتر)</span><h4 id="inv_lt" style="color:#8b4513;">0</h4></div></div>
     </div>
 
     <div class="card p-3">
-        <h6>🚜 العمليات والصيانة (للمزرعة الحالية):</h6>
-        <div class="d-flex flex-wrap">
-            <button class="btn btn-success btn-action" onclick="addLog('ري', 'كمية الري/الوقت:')">💧 ري</button>
-            <button class="btn btn-success btn-action" onclick="addLog('تسميد', 'نوع السماد والكمية:')">🧪 تسميد</button>
-            <button class="btn btn-success btn-action" onclick="addLog('رش', 'نوع المبيد:')">💨 رش</button>
-            <button class="btn btn-danger btn-action" onclick="addLog('صيانة', 'وصف العطل والإصلاح:')">🛠️ أعطال وصيانة</button>
-            <button class="btn btn-dark btn-action" onclick="addInv('inv_kg', 'كمية الحصاد بالكجم:')">📦 حصاد</button>
+        <h6 class="mb-3">🚜 العمليات الزراعية والصيانة:</h6>
+        <div class="d-flex flex-wrap justify-content-between">
+            <button class="btn btn-success btn-action" onclick="openModal('ري')">💧 ري</button>
+            <button class="btn btn-success btn-action" onclick="openModal('تسميد')">🧪 تسميد</button>
+            <button class="btn btn-success btn-action" onclick="openModal('رش')">💨 رش</button>
+            <button class="btn btn-danger btn-action" onclick="openModal('صيانة')">🛠️ أعطال</button>
+            <button class="btn btn-dark btn-action" onclick="openModal('حصاد')">📦 حصاد</button>
+            <button class="btn btn-primary btn-action" onclick="openModal('عمالة')">👥 عمالة</button>
         </div>
     </div>
 
     <div class="card p-3">
-        <h6>👥 شؤون العمالة (لهذه المزرعة):</h6>
-        <div class="d-flex flex-wrap mb-3">
-            <button class="btn btn-primary btn-action" onclick="staffLog('حضور')">✅ تسجيل حضور</button>
-            <button class="btn btn-outline-danger btn-action" onclick="staffLog('غياب')">❌ تسجيل غياب</button>
-            <button class="btn btn-info btn-action text-white" onclick="staffLog('إجازة')">🏖️ تسجيل إجازة</button>
-        </div>
+        <h6>👥 كشف العمالة (لهذه المزرعة):</h6>
         <div class="table-responsive">
             <table class="table table-sm table-bordered text-center small">
                 <thead class="table-light">
@@ -61,17 +58,86 @@
     </div>
 
     <div class="card p-3">
-        <h6>📜 سجل النشاطات الكامل:</h6>
-        <div id="generalLogs" class="small text-muted" style="max-height: 200px; overflow-y: auto;"></div>
+        <h6>📜 آخر النشاطات:</h6>
+        <div id="generalLogs" style="max-height: 250px; overflow-y: auto; font-size: 0.9rem;"></div>
     </div>
 </div>
 
+<div class="modal fade" id="actionModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalTitle">تسجيل عملية</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div id="modalInputs">
+                    </div>
+                <button class="btn btn-success w-100 mt-3" onclick="processData()">حفظ البيانات</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script>
-    let db = JSON.parse(localStorage.getItem('farm_system_v2')) || {
+    let currentType = '';
+    let db = JSON.parse(localStorage.getItem('farm_system_v3')) || {
         farm1: { name: "المزرعة الأولى", logs: [], staff: {}, inv_kg: 0, inv_lt: 0 },
         farm2: { name: "المزرعة الثانية", logs: [], staff: {}, inv_kg: 0, inv_lt: 0 },
         farm3: { name: "المزرعة الثالثة", logs: [], staff: {}, inv_kg: 0, inv_lt: 0 }
     };
+
+    const myModal = new bootstrap.Modal(document.getElementById('actionModal'));
+
+    function openModal(type) {
+        currentType = type;
+        document.getElementById('modalTitle').innerText = "تسجيل: " + type;
+        let inputs = document.getElementById('modalInputs');
+        inputs.innerHTML = '';
+
+        if (type === 'عمالة') {
+            inputs.innerHTML = `
+                <input type="text" id="staffName" class="form-control mb-2" placeholder="اسم العامل">
+                <select id="staffStatus" class="form-select">
+                    <option value="حضور">حضور ✅</option>
+                    <option value="غياب">غياب ❌</option>
+                    <option value="إجازة">إجازة 🏖️</option>
+                </select>`;
+        } else if (type === 'حصاد') {
+            inputs.innerHTML = `<input type="number" id="amount" class="form-control" placeholder="الكمية بالكجم">`;
+        } else {
+            inputs.innerHTML = `<textarea id="details" class="form-control" placeholder="اكتب التفاصيل هنا..."></textarea>`;
+        }
+        myModal.show();
+    }
+
+    function processData() {
+        let id = document.getElementById('farmSelect').value;
+        let date = new Date().toLocaleString('ar-EG');
+
+        if (currentType === 'عمالة') {
+            let name = document.getElementById('staffName').value;
+            let status = document.getElementById('staffStatus').value;
+            if (name) {
+                if (!db[id].staff[name]) db[id].staff[name] = { حضور: 0, غياب: 0, إجازة: 0 };
+                db[id].staff[name][status]++;
+                db[id].logs.push({ d: date, t: "عمالة", m: `${status}: ${name}` });
+            }
+        } else if (currentType === 'حصاد') {
+            let val = document.getElementById('amount').value;
+            if (val) {
+                db[id].inv_kg += parseFloat(val);
+                db[id].logs.push({ d: date, t: "محصول", m: "حصاد " + val + " كجم" });
+            }
+        } else {
+            let detail = document.getElementById('details').value;
+            if (detail) db[id].logs.push({ d: date, t: currentType, m: detail });
+        }
+        
+        save();
+        myModal.hide();
+    }
 
     function switchFarm() {
         let id = document.getElementById('farmSelect').value;
@@ -81,43 +147,8 @@
 
     function renameFarm() {
         let id = document.getElementById('farmSelect').value;
-        let newName = prompt("أدخل الاسم الجديد للمزرعة:", db[id].name);
-        if (newName) {
-            db[id].name = newName;
-            document.getElementById('farmDisplayTitle').innerText = newName;
-            document.querySelector(`#farmSelect option[value="${id}"]`).innerText = newName;
-            save();
-        }
-    }
-
-    function addLog(type, promptMsg) {
-        let id = document.getElementById('farmSelect').value;
-        let val = prompt(promptMsg);
-        if (val) {
-            db[id].logs.push({ d: new Date().toLocaleString('ar-EG'), t: type, m: val });
-            save();
-        }
-    }
-
-    function addInv(key, promptMsg) {
-        let id = document.getElementById('farmSelect').value;
-        let val = prompt(promptMsg);
-        if (val && !isNaN(val)) {
-            db[id][key] += parseFloat(val);
-            db[id].logs.push({ d: new Date().toLocaleString('ar-EG'), t: "مخزون", m: "إضافة " + val });
-            save();
-        }
-    }
-
-    function staffLog(status) {
-        let id = document.getElementById('farmSelect').value;
-        let name = prompt("اسم العامل:");
-        if (name) {
-            if (!db[id].staff[name]) db[id].staff[name] = { حضور: 0, غياب: 0, إجازة: 0 };
-            db[id].staff[name][status]++;
-            db[id].logs.push({ d: new Date().toLocaleDateString('ar-EG'), t: "عمالة", m: `${status}: ${name}` });
-            save();
-        }
+        let newName = prompt("اسم المزرعة الجديد:", db[id].name);
+        if (newName) { db[id].name = newName; save(); }
     }
 
     function updateUI() {
@@ -125,28 +156,26 @@
         let f = db[id];
         document.getElementById('inv_kg').innerText = f.inv_kg;
         document.getElementById('inv_lt').innerText = f.inv_lt;
-        
-        // تحديث جدول العمالة
+        document.getElementById('farmDisplayTitle').innerText = f.name;
+
         let sTable = '';
         for (let name in f.staff) {
             sTable += `<tr><td>${name}</td><td>${f.staff[name].حضور}</td><td>${f.staff[name].غياب}</td><td>${f.staff[name].إجازة}</td></tr>`;
         }
         document.getElementById('staffTable').innerHTML = sTable;
-
-        // تحديث السجل
-        document.getElementById('generalLogs').innerHTML = f.logs.map(l => `<div>[${l.d}] <b>${l.t}:</b> ${l.m}</div>`).reverse().join('');
+        document.getElementById('generalLogs').innerHTML = f.logs.map(l => `
+            <div class="border-bottom py-1"><b>${l.t}:</b> ${l.m} <small class="text-muted d-block">${l.d}</small></div>
+        `).reverse().join('');
     }
 
     function save() {
-        localStorage.setItem('farm_system_v2', JSON.stringify(db));
+        localStorage.setItem('farm_system_v3', JSON.stringify(db));
         updateUI();
     }
 
-    // تهيئة الأسماء في القائمة عند البدء
-    document.querySelectorAll('#farmSelect option').forEach(opt => {
-        opt.innerText = db[opt.value].name;
-    });
-    switchFarm();
+    // تحديث أسماء القائمة عند التشغيل
+    document.querySelectorAll('#farmSelect option').forEach(opt => opt.innerText = db[opt.value].name);
+    updateUI();
 </script>
 </body>
 </html>
