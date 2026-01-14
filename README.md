@@ -1,4 +1,4 @@
-https://samymno23-cpu.github.io/Agricultural-Project-Management--app/
+
 # إدارة المزرعة-app
 تطبيق شامل لإدارة المزارع والمشروعات الزراعية
 # farm-management-app
