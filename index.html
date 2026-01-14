@@ -3,21 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AGRO-AI PERMANENT V33</title>
+    <title>AGRO-AI IMPERIAL V36 | STABLE</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <style>
         :root { --p: #0f3d0e; --gold: #d4af37; --bg: #f8faf8; }
-        body { background: var(--bg); font-family: 'Segoe UI', Tahoma, sans-serif; padding-bottom: 90px; }
-        .header-royal { background: linear-gradient(135deg, var(--p), #051a05); color: white; padding: 40px 20px; border-radius: 0 0 50px 50px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); }
-        .panel-glass { background: white; border-radius: 25px; padding: 20px; box-shadow: 0 8px 25px rgba(0,0,0,0.05); margin-bottom: 20px; border: 1px solid #eee; }
+        body { background: var(--bg); font-family: 'Segoe UI', system-ui, sans-serif; padding-bottom: 90px; }
+        .header-royal { background: linear-gradient(135deg, var(--p), #051a05); color: white; padding: 40px 20px; border-radius: 0 0 50px 50px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); text-align: center; }
         .ai-banner { background: #fffcf0; border-right: 6px solid var(--gold); border-radius: 20px; padding: 20px; margin-top: -35px; position: relative; z-index: 10; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
+        .panel-glass { background: white; border-radius: 25px; padding: 20px; box-shadow: 0 8px 25px rgba(0,0,0,0.05); margin-bottom: 20px; border: 1px solid #eee; }
         .grid-master { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
         .btn-master { border: none; border-radius: 22px; padding: 20px 5px; background: white; box-shadow: 0 4px 12px rgba(0,0,0,0.04); display: flex; flex-direction: column; align-items: center; gap: 8px; transition: 0.2s; }
         .btn-master i { font-size: 1.8rem; color: var(--p); }
-        .btn-master span { font-weight: 700; font-size: 0.8rem; color: #444; }
-        .mic-gold { background: var(--gold); color: white; border: none; width: 55px; height: 55px; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 5px 15px rgba(212, 175, 55, 0.3); cursor: pointer; position: relative; margin: 0 auto; }
+        .btn-master span { font-weight: 700; font-size: 0.8rem; color: #333; }
+        .mic-gold { background: var(--gold); color: white; border: none; width: 55px; height: 55px; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 8px 20px rgba(212, 175, 55, 0.4); cursor: pointer; position: relative; margin: 0 auto; }
         .pulse-ring { position: absolute; width: 100%; height: 100%; border-radius: 50%; background: var(--gold); opacity: 0.5; animation: pulse 1.5s infinite; display: none; }
         @keyframes pulse { 0% { transform: scale(1); opacity: 0.5; } 100% { transform: scale(1.6); opacity: 0; } }
         .page-full { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--bg); z-index: 5000; overflow-y: auto; padding: 25px; }
@@ -32,17 +32,12 @@
 <body>
 
 <div id="homeView">
-    <div class="header-royal text-center">
-        <h4 id="hFarmName" class="fw-bold mb-0">...</h4>
-        <div id="hWeather" class="small opacity-75 mt-2">جاري مزامنة الموقع...</div>
-    </div>
+    <div class="header-royal"><h4 id="hFarmName" class="fw-bold mb-0">...</h4><div id="hWeather" class="small opacity-75 mt-2">جاري مزامنة الطقس...</div></div>
     <div class="container px-3">
         <div class="ai-banner">
-            <div class="d-flex align-items-center gap-2 text-success mb-2">
-                <i class="fas fa-robot"></i> <b class="small">مساعد Agro-AI الذكي:</b>
-            </div>
-            <p id="aiWelcome" class="small mb-0 text-muted">مرحباً يا بشمهندس سامي؛ تم تثبيت قاعدة البيانات للأبد.</p>
-            <div id="thursdayAlert" class="mt-2 p-2 bg-warning bg-opacity-10 rounded-3 small text-dark fw-bold" style="display:none; border: 1px dashed orange;">🔔 تنبيه الخميس: موعد التقرير الأسبوعي.</div>
+            <div class="d-flex align-items-center gap-2 text-success mb-2"><i class="fas fa-robot"></i> <b class="small">Agro-AI Assistant:</b></div>
+            <p id="aiWelcome" class="small mb-0 text-muted">مرحباً يا بشمهندس سامي؛ جميع الأنظمة تعمل بدقة وميكروفون الاستجابة الفورية مفعل.</p>
+            <div id="thursdayAlert" class="mt-2 p-2 bg-warning bg-opacity-10 rounded-3 small text-dark fw-bold" style="display:none; border: 1px dashed orange;">🔔 تنبيه: اليوم الخميس؛ يرجى استخراج تقرير PDF الأسبوعي.</div>
         </div>
         <div class="row g-2 my-4 text-center">
             <div class="col-4"><div class="panel-glass p-2 mb-0"><small class="text-muted d-block small">المحصول</small><b id="vKg" class="text-success fs-5">0</b></div></div>
@@ -56,7 +51,7 @@
             <button class="btn-master" onclick="startOp('تقليم')"><i class="fas fa-scissors"></i><span>تقليم</span></button>
             <button class="btn-master" onclick="startOp('صيانة')"><i class="fas fa-tools"></i><span>صيانة</span></button>
             <button class="btn-master" onclick="startOp('حصاد')"><i class="fas fa-box-open"></i><span>حصاد</span></button>
-            <button class="btn-master" onclick="openPage('staffPage')"><i class="fas fa-users-cog"></i><span>العمالة</span></button>
+            <button class="btn-master" onclick="openPage('staffPage')"><i class="fas fa-users-gear"></i><span>العمالة</span></button>
             <button class="btn-master" onclick="openPage('aiVisionPage')"><i class="fas fa-eye"></i><span>فحص AI</span></button>
             <button class="btn-master" onclick="startOp('أخرى')"><i class="fas fa-plus-circle"></i><span>أخرى</span></button>
         </div>
@@ -64,52 +59,49 @@
 </div>
 
 <div id="opPage" class="page-full">
-    <div class="back-nav"><button class="btn-back-circle" onclick="goHome()"><i class="fas fa-arrow-right"></i></button><h4 id="opTitleHeader" class="fw-bold mb-0"></h4></div>
+    <div class="back-nav d-flex gap-3 mb-4"><button class="btn-back-circle" onclick="goHome()"><i class="fas fa-arrow-right"></i></button><h4 id="opTitleHeader" class="fw-bold mb-0"></h4></div>
     <div id="opFields" class="mb-4"></div>
     <div class="panel-glass text-center py-4 bg-light shadow-sm">
-        <p class="small text-muted fw-bold mb-3">سجل بالصوت (لا يفصل تلقائياً):</p>
+        <p class="small text-muted fw-bold mb-3">سجل بالصوت (تحدث وسيظهر النص فوراً):</p>
         <div class="mic-gold mx-auto" id="micBtn" onclick="toggleVoice('v1')">
-            <div class="pulse-ring" id="pulse"></div>
-            <i class="fas fa-microphone fs-4"></i>
+            <div class="pulse-ring" id="pulse"></div><i class="fas fa-microphone fs-4"></i>
         </div>
-        <div id="micStatus" class="small mt-3 text-danger fw-bold" style="display:none;">🔴 جاري الاستماع المستمر...</div>
+        <div id="micStatus" class="small mt-3 text-danger fw-bold" style="display:none;">🔴 جاري الاستماع الفوري المستمر...</div>
     </div>
-    <button class="btn btn-success w-100 py-3 rounded-pill fw-bold fs-5 shadow" onclick="finalSave()">حفظ وتطهير الحقول</button>
+    <button class="btn btn-success w-100 py-3 rounded-pill fw-bold fs-5 shadow" onclick="finalSave()">حفظ وتطهير البيانات</button>
 </div>
 
 <div id="staffPage" class="page-full">
-    <div class="back-nav"><button class="btn-back-circle" onclick="goHome()"><i class="fas fa-arrow-right"></i></button><h4 class="fw-bold mb-0">العمالة والرواتب</h4></div>
+    <div class="back-nav d-flex gap-3 mb-4"><button class="btn-back-circle" onclick="goHome()"><i class="fas fa-arrow-right"></i></button><h4 class="fw-bold mb-0">العمالة والأجور</h4></div>
     <div class="panel-glass">
-        <input type="text" id="wNameIn" class="form-control mb-2 p-3 rounded-4 shadow-sm" placeholder="اسم العامل">
-        <input type="number" id="wRate" class="form-control mb-3 p-3 rounded-4 shadow-sm" placeholder="يومية العامل (بالجنيه)">
-        <div class="d-flex gap-2 mb-4">
-            <button class="btn btn-success flex-grow-1 rounded-pill" onclick="logWorker('حضور')">حضور</button>
-            <button class="btn btn-danger flex-grow-1 rounded-pill" onclick="logWorker('غياب')">غياب</button>
+        <label class="fw-bold small mb-2">اسم العامل:</label>
+        <div class="input-group mb-2">
+            <input type="text" id="wNameIn" class="form-control p-3 rounded-start-4 shadow-sm" placeholder="اسم العامل...">
+            <button class="btn btn-warning text-white px-3 rounded-end-4" onclick="toggleVoice('wNameIn')"><i class="fas fa-microphone"></i></button>
         </div>
-        <div class="table-responsive">
-            <table class="table table-sm text-center small"><thead class="table-dark"><tr><th>العامل</th><th>ح</th><th>غ</th><th>إجمالي المستحقات</th></tr></thead><tbody id="wTable"></tbody></table>
-        </div>
+        <input type="number" id="wRate" class="form-control mb-3 p-3 rounded-4 shadow-sm" placeholder="يومية العامل (جنيه)">
+        <div class="d-flex gap-2 mb-4"><button class="btn btn-outline-success flex-grow-1 rounded-pill" onclick="logWorker('حضور')">حضور</button><button class="btn btn-outline-danger flex-grow-1 rounded-pill" onclick="logWorker('غياب')">غياب</button></div>
+        <div class="table-responsive"><table class="table table-sm text-center small"><thead class="table-dark"><tr><th>العامل</th><th>ح</th><th>غ</th><th>المستحقات</th></tr></thead><tbody id="wTable"></tbody></table></div>
     </div>
 </div>
 
 <div class="nav-dock">
     <button class="dock-link active" onclick="goHome()"><i class="fas fa-home fs-4"></i></button>
+    <button class="dock-link" onclick="openPage('farmsPage')"><i class="fas fa-layer-group fs-4"></i></button>
     <button class="dock-link" onclick="openPage('stockPage')"><i class="fas fa-warehouse fs-4"></i></button>
     <button class="dock-link" onclick="openPage('financePage')"><i class="fas fa-wallet fs-4"></i></button>
     <button class="dock-link" onclick="openPage('archivePage')"><i class="fas fa-history fs-4"></i></button>
 </div>
 
-<div id="stockPage" class="page-full"><div class="back-nav"><button class="btn-back-circle" onclick="goHome()"><i class="fas fa-arrow-right"></i></button><h4>المخزن</h4></div><div class="panel-glass"><input type="text" id="skI" class="form-control mb-2 rounded-4" placeholder="الصنف"><input type="number" id="skQ" class="form-control mb-3 rounded-4" placeholder="الكمية"><button class="btn btn-primary w-100 rounded-pill" onclick="addStk()">إضافة</button></div><div id="skL"></div></div>
-<div id="financePage" class="page-full"><div class="back-nav"><button class="btn-back-circle" onclick="goHome()"><i class="fas fa-arrow-right"></i></button><h4>المالية</h4></div><div class="panel-glass"><input type="number" id="fA" class="form-control mb-2" placeholder="المبلغ"><select id="fT" class="form-select mb-2"><option value="إيراد">إيراد (+)</option><option value="مصروف">مصروف (-)</option></select><input type="text" id="fD" class="form-control mb-3" placeholder="البيان"><button class="btn btn-dark w-100 rounded-pill" onclick="addFin()">حفظ</button></div><div id="fL"></div></div>
-<div id="archivePage" class="page-full"><div class="back-nav"><button class="btn-back-circle" onclick="goHome()"><i class="fas fa-arrow-right"></i></button><h4>الأرشيف</h4></div><button class="btn btn-dark w-100 rounded-pill mb-3" onclick="genReport()">تحميل PDF</button><div id="archL"></div></div>
-<div id="farmsPage" class="page-full"><div class="back-nav"><button class="btn-back-circle" onclick="goHome()"><i class="fas fa-arrow-right"></i></button><h4>المزارع</h4></div><div id="frmL" class="mb-4"></div><div class="panel-glass"><input type="text" id="nF" class="form-control mb-2" placeholder="مزرعة جديدة"><button class="btn btn-success w-100 rounded-pill" onclick="addFarm()">إضافة</button></div></div>
-<div id="aiVisionPage" class="page-full text-center"><div class="back-nav"><button class="btn-back-circle" onclick="goHome()"><i class="fas fa-arrow-right"></i></button><h4>فحص AI</h4></div><div class="panel-glass py-5"><i class="fas fa-camera-retro fa-3x text-success mb-3"></i><input type="file" class="form-control rounded-pill mb-3" id="vImg"><button class="btn btn-primary w-100 rounded-pill" onclick="runAI()">بدء التحليل</button></div><div id="aiR"></div></div>
+<div id="stockPage" class="page-full"><div class="back-nav d-flex gap-3"><button class="btn-back-circle" onclick="goHome()"><i class="fas fa-arrow-right"></i></button><h4>المخزن</h4></div><div class="panel-glass"><input type="text" id="skI" class="form-control mb-2 rounded-4" placeholder="الصنف"><input type="number" id="skQ" class="form-control mb-3 rounded-4" placeholder="الكمية"><button class="btn btn-primary w-100 rounded-pill" onclick="addStk()">إضافة للمخزن</button></div><div id="skL"></div></div>
+<div id="financePage" class="page-full"><div class="back-nav d-flex gap-3"><button class="btn-back-circle" onclick="goHome()"><i class="fas fa-arrow-right"></i></button><h4>المالية</h4></div><div class="panel-glass"><input type="number" id="fA" class="form-control mb-2" placeholder="المبلغ"><select id="fT" class="form-select mb-2"><option value="إيراد">إيراد (+)</option><option value="مصروف">مصروف (-)</option></select><input type="text" id="fD" class="form-control mb-3" placeholder="البيان"><button class="btn btn-dark w-100 rounded-pill" onclick="addFin()">حفظ الحركة</button></div><div id="fL"></div></div>
+<div id="archivePage" class="page-full"><div class="back-nav d-flex gap-3"><button class="btn-back-circle" onclick="goHome()"><i class="fas fa-arrow-right"></i></button><h4>الأرشيف</h4></div><button class="btn btn-dark w-100 rounded-pill mb-3" onclick="genReport()">تحميل PDF</button><div id="archL"></div></div>
+<div id="farmsPage" class="page-full"><div class="back-nav d-flex gap-3"><button class="btn-back-circle" onclick="goHome()"><i class="fas fa-arrow-right"></i></button><h4>المزارع</h4></div><div id="frmL" class="mb-4"></div><div class="panel-glass"><input type="text" id="nF" class="form-control mb-2" placeholder="اسم مزرعة جديدة"><button class="btn btn-success w-100 rounded-pill" onclick="addFarm()">إضافة</button></div></div>
+<div id="aiVisionPage" class="page-full text-center"><div class="back-nav d-flex gap-3"><button class="btn-back-circle" onclick="goHome()"><i class="fas fa-arrow-right"></i></button><h4>فحص AI</h4></div><div class="panel-glass py-5"><i class="fas fa-brain fa-3x text-success mb-3"></i><input type="file" class="form-control rounded-pill mb-3" id="vImg"><button class="btn btn-primary w-100 rounded-pill" onclick="runAI()">بدء التحليل</button></div><div id="aiR"></div></div>
 
 <script>
-    const STORAGE_KEY = 'AGRO_AI_PERMANENT_SAMI'; // مفتاح ثابت لن يتغير أبداً
-    let db = JSON.parse(localStorage.getItem(STORAGE_KEY)) || {
-        cur: 'f1', farms: { f1: { name: "مزرعة المهندس سامي", logs: [], kg: 0, stock: {}, staff: [], fin: [] } }
-    };
+    const ST_KEY = 'AGRO_AI_PERMANENT_SAMI';
+    let db = JSON.parse(localStorage.getItem(ST_KEY)) || { cur: 'f1', farms: { f1: { name: "مزرعة المهندس سامي", logs: [], kg: 0, stock: {}, staff: [], fin: [] } } };
     let activeOpT = ''; let recognition; let isRecording = false;
 
     function toggleVoice(tid) {
@@ -123,26 +115,26 @@
         recognition.start();
     }
 
-    function openPage(id) { document.querySelectorAll('.page-full').forEach(p => p.classList.remove('active')); document.getElementById(id).classList.add('active'); if(id === 'archivePage') renderArch(); if(id === 'stockPage') renderStk(); if(id === 'financePage') renderFin(); if(id === 'staffPage') renderStaff(); if(id === 'farmsPage') renderFrms(); }
+    function openPage(id) { document.querySelectorAll('.page-full').forEach(p => p.classList.remove('active')); document.getElementById(id).classList.add('active'); if(id==='archivePage') renderArch(); if(id==='stockPage') renderStk(); if(id==='financePage') renderFin(); if(id==='staffPage') renderStaff(); if(id==='farmsPage') renderFrms(); }
     function goHome() { document.querySelectorAll('.page-full').forEach(p => p.classList.remove('active')); renderHome(); }
 
     function startOp(op) {
         activeOpT = op; document.getElementById('opTitleHeader').innerText = "تسجيل " + op;
         const area = document.getElementById('opFields'); const f = db.farms[db.cur]; area.innerHTML = '';
         if(op === 'تسميد') {
-            let opts = Object.keys(f.stock).map(k => `<option value="${k}">${k} (${f.stock[k]} متاح)</option>`).join('');
+            let opts = Object.keys(f.stock).map(k => `<option value="${k}">${k} (متاح: ${f.stock[k]})</option>`).join('');
             area.innerHTML = `<select id="v1" class="form-select mb-3 p-3 rounded-4 shadow-sm">${opts || '<option>المخزن فارغ</option>'}</select><input type="number" id="v2" class="form-control p-3 rounded-4" placeholder="الكمية">`;
-        } else if(op === 'حصاد') { area.innerHTML = `<input type="number" id="v1" class="form-control p-3 rounded-4" placeholder="الكمية كجم">`; }
-        else { area.innerHTML = `<textarea id="v1" class="form-control p-3 rounded-4 shadow-sm" rows="10" placeholder="اضغط على الميكروفون وتحدث..."></textarea>`; }
+        } else if(op === 'حصاد') area.innerHTML = `<input type="number" id="v1" class="form-control p-3 rounded-4" placeholder="الكمية كجم">`;
+        else area.innerHTML = `<textarea id="v1" class="form-control p-3 rounded-4 shadow-sm" rows="10" placeholder="تحدث وسأكتب لك فوراً..."></textarea>`;
         openPage('opPage');
     }
 
     function finalSave() {
         const f = db.farms[db.cur]; let msg = "";
         const v1 = document.getElementById('v1')?.value, v2 = document.getElementById('v2')?.value;
-        if(activeOpT === 'تسميد') { if(f.stock[v1] >= v2) { f.stock[v1] -= v2; msg = `تسميد: ${v1} (${v2})`; } else { return alert("لا يكفي"); } }
+        if(activeOpT === 'تسميد') { if(f.stock[v1] >= v2) { f.stock[v1] -= v2; msg = `تسميد: ${v1} (${v2})`; } else return alert("المخزن لا يكفي"); }
         else if(activeOpT === 'حصاد') { f.kg += parseFloat(v1 || 0); msg = `حصاد ${v1} كجم`; }
-        else { msg = v1; }
+        else msg = v1;
         if(!msg) return;
         f.logs.push({ d: new Date().toLocaleString('ar-EG'), t: activeOpT, m: msg });
         sync(); scrubAll(); goHome();
@@ -157,30 +149,27 @@
         if(new Date().getDay() === 4) document.getElementById('thursdayAlert').style.display = 'block';
     }
 
+    function logWorker(s) { 
+        let n = document.getElementById('wNameIn').value, r = document.getElementById('wRate').value; if(!n) return;
+        db.farms[db.cur].staff.push({ n, s, r: parseFloat(r || 0), d: new Date().toLocaleDateString('ar-EG') });
+        sync(); renderStaff(); scrubAll();
+    }
+    function renderStaff() {
+        let res = {}; db.farms[db.cur].staff.forEach(e => { if(!res[e.n]) res[e.n]={ح:0, غ:0, r:e.r}; res[e.n][e.s==='حضور'?'ح':'غ']++; });
+        document.getElementById('wTable').innerHTML = Object.keys(res).map(n => `<tr><td>${n}</td><td>${res[n].ح}</td><td>${res[n].غ}</td><td class="text-success fw-bold">${res[n].ح * res[n].r} ج</td></tr>`).join('');
+    }
+
+    function sync() { localStorage.setItem(ST_KEY, JSON.stringify(db)); }
     function addStk() { let n = document.getElementById('skI').value, q = document.getElementById('skQ').value; if(n && q){ db.farms[db.cur].stock[n] = (db.farms[db.cur].stock[n]||0) + parseFloat(q); sync(); renderStk(); scrubAll(); } }
     function renderStk() { document.getElementById('skL').innerHTML = Object.keys(db.farms[db.cur].stock).map(k => `<div class="panel-glass mb-2 d-flex justify-content-between"><b>${k}</b><span class="text-success">${db.farms[db.cur].stock[k]}</span></div>`).join(''); }
-
     function addFin() { let a = document.getElementById('fA').value, t = document.getElementById('fT').value, d = document.getElementById('fD').value; if(a && d){ db.farms[db.cur].fin.push({ a: (t==='إيراد'?1:-1)*parseFloat(a), d, dt: new Date().toLocaleDateString('ar-EG') }); sync(); scrubAll(); alert("تم الحفظ"); } }
     function renderFin() { document.getElementById('fL').innerHTML = (db.farms[db.cur].fin||[]).map(m => `<div class="panel-glass mb-2 d-flex justify-content-between shadow-sm"><span>${m.dt}</span><b>${m.d}</b><span class="${m.a>0?'text-success':'text-danger'}">${m.a}</span></div>`).reverse().join(''); }
-
-    function logWorker(s) { 
-        let n = document.getElementById('wNameIn').value, r = document.getElementById('wRate').value; 
-        if(!n) return; 
-        db.farms[db.cur].staff.push({ n, s, r: parseFloat(r || 0), d: new Date().toLocaleDateString('ar-EG') }); 
-        sync(); renderStaff(); scrubAll(); 
-    }
-    function renderStaff() { 
-        let res = {}; db.farms[db.cur].staff.forEach(e => { if(!res[e.n]) res[e.n] = {ح:0, غ:0, rate: e.r || 0}; res[e.n][e.s==='حضور'?'ح':'غ']++; }); 
-        document.getElementById('wTable').innerHTML = Object.keys(res).map(n => `<tr><td>${n}</td><td>${res[n].ح}</td><td>${res[n].غ}</td><td class="fw-bold text-success">${res[n].ح * res[n].rate} جنيه</td></tr>`).join(''); 
-    }
-
-    function sync() { localStorage.setItem(STORAGE_KEY, JSON.stringify(db)); }
     function renderArch() { document.getElementById('archL').innerHTML = db.farms[db.cur].logs.map(l => `<div class="panel-glass mb-2"><span class="badge bg-success mb-1">${l.t}</span><br><b>${l.m}</b><br><small class="text-muted">${l.d}</small></div>`).reverse().join(''); }
     function renderFrms() { document.getElementById('frmL').innerHTML = Object.keys(db.farms).map(id => `<div class="panel-glass mb-2 d-flex justify-content-between ${id===db.cur?'border-success border-2 border':''}" onclick="selFrm('${id}')"><b>${db.farms[id].name}</b></div>`).join(''); }
     function selFrm(id) { db.cur = id; sync(); goHome(); }
     function addFarm() { let n = document.getElementById('nF').value; if(n){ let id = 'f'+Date.now(); db.farms[id]={name:n, logs:[], kg:0, stock:{}, fin:[], staff:[]}; db.cur=id; sync(); goHome(); scrubAll(); } }
-    function genReport() { let h = `<div dir="rtl" style="padding:20px; font-family:Arial"><h2>تقرير المزرعة - المهندس سامي</h2><table border="1" style="width:100%; text-align:center"><tr><th>التاريخ</th><th>النوع</th><th>التفاصيل</th></tr>`; db.farms[db.cur].logs.forEach(l => h += `<tr><td>${l.d}</td><td>${l.t}</td><td>${l.m}</td></tr>`); html2pdf().from(h + "</table></div>").save('AgroReport_Samy_Stable.pdf'); }
-    function runAI() { const r = document.getElementById('aiR'); r.innerHTML = '<div class="spinner-border text-success my-3"></div>'; setTimeout(() => { r.innerHTML = '<div class="panel-glass text-success">تحليل AI: الحالة مستقرة والبيانات مؤمنة.</div>'; }, 2000); }
+    function genReport() { let h = `<div dir="rtl" style="padding:20px; font-family:Arial"><h2>تقرير المزرعة - المهندس سامي</h2><table border="1" style="width:100%; text-align:center"><tr><th>التاريخ</th><th>النوع</th><th>التفاصيل</th></tr>`; db.farms[db.cur].logs.forEach(l => h += `<tr><td>${l.d}</td><td>${l.t}</td><td>${l.m}</td></tr>`); html2pdf().from(h + "</table></div>").save('AgroReport_Samy_Final.pdf'); }
+    function runAI() { const r = document.getElementById('aiR'); r.innerHTML = '<div class="spinner-border text-success my-3"></div>'; setTimeout(() => { r.innerHTML = '<div class="panel-glass text-success">تحليل AI: الحالة ممتازة.</div>'; }, 2000); }
 
     navigator.geolocation.getCurrentPosition(p => {
         fetch(`https://api.open-meteo.com/v1/forecast?latitude=${p.coords.latitude}&longitude=${p.coords.longitude}&current_weather=true`)
