@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AGRO-AI IMPERIAL V49 | STABLE</title>
+    <title>AGRO-AI IMPERIAL V51 | المهندس سامي</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
@@ -34,8 +34,7 @@
     <div class="container px-3">
         <div class="ai-banner">
             <div class="d-flex align-items-center gap-2 text-success mb-2"><i class="fas fa-microchip"></i> <b class="small">المهندس سامي AI:</b></div>
-            <p id="aiWelcome" class="small mb-0 text-muted">تمت المراجعة والتدقيق؛ النظام الشامل جاهز للعمل بكامل طاقته وببيانات مستقرة.</p>
-            <div id="weatherTip" class="mt-2 p-2 bg-info bg-opacity-10 rounded-3 small text-primary fw-bold" style="display:none; border: 1px dashed blue;"></div>
+            <p id="aiWelcome" class="small mb-0 text-muted">تمت المراجعة النهائية؛ التعديل المباشر للأيام والأحواض مفعل الآن.</p>
         </div>
 
         <div class="row g-2 my-4 text-center">
@@ -62,9 +61,8 @@
 </div>
 
 <div id="staffPage" class="page-full">
-    <div class="back-nav d-flex gap-3 mb-4"><button class="btn-back" onclick="goHome()"><i class="fas fa-arrow-right"></i></button><h4 class="fw-bold mb-0">إدارة العمالة</h4></div>
+    <div class="back-nav d-flex gap-3 mb-4"><button class="btn-back" onclick="goHome()"><i class="fas fa-arrow-right"></i></button><h4 class="fw-bold mb-0">إدارة العمالة والأيام</h4></div>
     <div class="panel-glass">
-        <label class="small fw-bold mb-1">اسم العامل:</label>
         <div class="input-group mb-2">
             <input type="text" id="wNameIn" class="form-control p-3 shadow-sm" list="workersList" placeholder="اسم العامل...">
             <datalist id="workersList"></datalist>
@@ -72,13 +70,13 @@
         </div>
         <div class="row g-2 mb-3">
             <div class="col-6"><label class="small fw-bold">تاريخ البدء:</label><input type="date" id="wStartDate" class="form-control" value="2026-01-01"></div>
-            <div class="col-6"><label class="small fw-bold">اليومية:</label><input type="number" id="wRate" class="form-control" placeholder="جنيه"></div>
+            <div class="col-6"><label class="small fw-bold">اليومية:</label><input type="number" id="wRate" class="form-control"></div>
         </div>
         <div class="d-flex gap-2 mb-4">
-            <button class="btn btn-success flex-grow-1 rounded-pill py-2" onclick="logWorker('حضور')">تسجيل حضور</button>
-            <button class="btn btn-danger flex-grow-1 rounded-pill py-2" onclick="logWorker('غياب')">تسجيل غياب</button>
+            <button class="btn btn-success flex-grow-1 rounded-pill" onclick="logWorker('حضور')">تسجيل حضور</button>
+            <button class="btn btn-danger flex-grow-1 rounded-pill" onclick="logWorker('غياب')">تسجيل غياب</button>
         </div>
-        <div class="table-responsive"><table class="table table-sm text-center small"><thead class="table-dark"><tr><th>العامل</th><th>المدة</th><th>ح</th><th>غ</th><th>المستحقات</th><th>إجراء</th></tr></thead><tbody id="wTable"></tbody></table></div>
+        <div class="table-responsive"><table class="table table-sm text-center small"><thead class="table-dark"><tr><th>العامل</th><th>المدة</th><th>ح</th><th>غ</th><th>المبلغ</th><th>تعديل</th></tr></thead><tbody id="wTable"></tbody></table></div>
     </div>
 </div>
 
@@ -93,7 +91,7 @@
         </div>
         <button class="btn btn-success w-100 rounded-pill" onclick="addZone()">تأكيد حفظ الحوض</button>
     </div>
-    <div id="zonesList" class="mt-3"></div>
+    <div id="zonesList"></div>
 </div>
 
 <div id="opPage" class="page-full">
@@ -103,7 +101,7 @@
         <div class="mic-gold mx-auto" onclick="toggleVoice('vText')"><div class="pulse" id="pulse"></div><i class="fas fa-microphone fs-4"></i></div>
         <div id="micStatus" class="small mt-3 text-danger fw-bold" style="display:none;">🔴 جاري الاستماع...</div>
     </div>
-    <button class="btn btn-success w-100 py-3 rounded-pill fw-bold" onclick="finalSave()">حفظ العملية وتصفير البيانات</button>
+    <button class="btn btn-success w-100 py-3 rounded-pill fw-bold" onclick="finalSave()">حفظ العملية</button>
 </div>
 
 <div class="nav-dock">
@@ -113,7 +111,7 @@
 </div>
 
 <div id="stockPage" class="page-full"><div class="back-nav d-flex gap-3"><button class="btn-back" onclick="goHome()"><i class="fas fa-arrow-right"></i></button><h4>المخزن</h4></div><div class="panel-glass"><input type="text" id="skI" class="form-control mb-2" placeholder="الصنف"><input type="number" id="skQ" class="form-control mb-3" placeholder="الكمية"><button class="btn btn-primary w-100 rounded-pill" onclick="addStk()">إضافة</button></div><div id="skL"></div></div>
-<div id="archivePage" class="page-full"><div class="back-nav d-flex gap-3"><button class="btn-back" onclick="goHome()"><i class="fas fa-arrow-right"></i></button><h4>الأرشيف والتعديل</h4></div><button class="btn btn-dark w-100 rounded-pill mb-3" onclick="genReport()">تحميل PDF</button><div id="archL"></div></div>
+<div id="archivePage" class="page-full"><div class="back-nav d-flex gap-3"><button class="btn-back" onclick="goHome()"><i class="fas fa-arrow-right"></i></button><h4>الأرشيف</h4></div><button class="btn btn-dark w-100 rounded-pill mb-3" onclick="genReport()">تحميل PDF</button><div id="archL"></div></div>
 <div id="financePage" class="page-full"><div class="back-nav d-flex gap-3"><button class="btn-back" onclick="goHome()"><i class="fas fa-arrow-right"></i></button><h4>المالية</h4></div><div class="panel-glass"><input type="number" id="fA" class="form-control mb-2" placeholder="المبلغ"><select id="fT" class="form-select mb-2"><option value="إيراد">إيراد (+)</option><option value="مصروف">مصروف (-)</option></select><input type="text" id="fD" class="form-control mb-3" placeholder="البيان"><button class="btn btn-dark w-100 rounded-pill" onclick="addFin()">حفظ الحركة</button></div><div id="fL"></div></div>
 <div id="farmsPage" class="page-full"><div class="back-nav d-flex gap-3"><button class="btn-back" onclick="goHome()"><i class="fas fa-arrow-right"></i></button><h4>المزارع والنسخ</h4></div><div id="frmL" class="mb-4"></div><button class="btn btn-outline-danger w-100 rounded-pill mt-3" onclick="exportDB()">📤 تحميل نسخة احتياطية</button></div>
 <div id="aiVisionPage" class="page-full text-center"><div class="back-nav d-flex gap-3"><button class="btn-back" onclick="goHome()"><i class="fas fa-arrow-right"></i></button><h4>فحص AI</h4></div><div class="panel-glass py-5"><i class="fas fa-microchip fa-3x text-success mb-3"></i><input type="file" class="form-control mb-3" id="vImg"><button class="btn btn-primary w-100 rounded-pill" onclick="runAI()">بدء التحليل</button></div><div id="aiR"></div></div>
@@ -143,28 +141,39 @@
         let n = document.getElementById('zName').value, t = document.getElementById('zTrees').value, ty = document.getElementById('zType').value;
         if(n && t) { 
             if(!db.farms[db.cur].zones) db.farms[db.cur].zones = [];
-            db.farms[db.cur].zones.push({ n, t, ty }); sync(); renderZones(); scrubAll(); alert("تم حفظ الحوض بنجاح");
+            db.farms[db.cur].zones.push({ n, t, ty }); sync(); renderZones(); scrubAll(); alert("تم حفظ الحوض");
         }
     }
-    function renderZones() { document.getElementById('zonesList').innerHTML = (db.farms[db.cur].zones || []).map(z => `<div class="panel-glass mb-2 d-flex justify-content-between align-items-center"><div><b>${z.n}</b><br><small>${z.t} شجرة (${z.ty})</small></div><i class="fas fa-tree text-success fs-3"></i></div>`).join(''); }
+    
+    function editZoneData(idx) {
+        let z = db.farms[db.cur].zones[idx];
+        document.getElementById('zName').value = z.n;
+        document.getElementById('zTrees').value = z.t;
+        document.getElementById('zType').value = z.ty;
+        db.farms[db.cur].zones.splice(idx, 1);
+        renderZones();
+    }
+
+    function renderZones() { document.getElementById('zonesList').innerHTML = (db.farms[db.cur].zones || []).map((z, idx) => `<div class="panel-glass mb-2 d-flex justify-content-between align-items-center"><div><b>${z.n}</b><br><small>${z.t} شجرة (${z.ty})</small></div><button class="btn btn-sm btn-warning" onclick="editZoneData(${idx})">تعديل</button></div>`).join(''); }
 
     function logWorker(s) {
         let n = document.getElementById('wNameIn').value, r = document.getElementById('wRate').value, sd = document.getElementById('wStartDate').value;
-        if(!n || !r) return alert("يرجى إدخال الاسم واليومية");
+        if(!n || !r) return alert("أدخل الاسم واليومية");
         db.farms[db.cur].staff.push({ n, s, r: parseFloat(r), start: sd, d: new Date().toISOString() });
         sync(); renderStaff(); scrubAll();
     }
     
-    function editWorkerData(name) {
+    function editWorkerPresence(name) {
+        let p = prompt("أدخل عدد أيام الحضور الجديدة:");
+        let a = prompt("أدخل عدد أيام الغياب الجديدة:");
+        if (p === null || a === null) return;
         let workers = db.farms[db.cur].staff.filter(w => w.n === name);
         if(workers.length > 0) {
-            let last = workers[workers.length-1];
-            document.getElementById('wNameIn').value = last.n;
-            document.getElementById('wRate').value = last.r;
-            document.getElementById('wStartDate').value = last.start;
+            let base = workers[0];
             db.farms[db.cur].staff = db.farms[db.cur].staff.filter(w => w.n !== name);
-            renderStaff();
-            alert("تم تحميل بيانات العامل للتعديل.");
+            for(let i=0; i<parseInt(p); i++) db.farms[db.cur].staff.push({...base, s:'حضور'});
+            for(let i=0; i<parseInt(a); i++) db.farms[db.cur].staff.push({...base, s:'غياب'});
+            sync(); renderStaff();
         }
     }
 
@@ -172,12 +181,12 @@
         let res = {}; let list = document.getElementById('workersList'); list.innerHTML = '';
         db.farms[db.cur].staff.forEach(e => {
             if(!res[e.n]) {
-                let diff = 0; if(e.start) diff = Math.floor((new Date() - new Date(e.start)) / (1000 * 60 * 60 * 24)) + 1;
-                res[e.n] = {ح:0, غ:0, rate:e.r, start:e.start || "غير محدد", total: diff || 0}; list.innerHTML += `<option value="${e.n}">`;
+                let diff = 0; if(e.start && !isNaN(new Date(e.start))) diff = Math.floor((new Date() - new Date(e.start)) / (86400000)) + 1;
+                res[e.n] = {ح:0, غ:0, rate:e.r, start:e.start, total: diff || 0}; list.innerHTML += `<option value="${e.n}">`;
             }
             if(e.s==='حضور') res[e.n].ح++; else res[e.n].غ++;
         });
-        document.getElementById('wTable').innerHTML = Object.keys(res).map(n => `<tr><td>${n}</td><td>${res[n].total} يوم</td><td class="text-success fw-bold">${res[n].ح}</td><td class="text-danger">${res[n].غ}</td><td class="fw-bold text-success">${res[n].ح * res[n].rate} ج</td><td><button class="btn btn-sm btn-warning" onclick="editWorkerData('${n}')"><i class="fas fa-edit"></i></button></td></tr>`).join('');
+        document.getElementById('wTable').innerHTML = Object.keys(res).map(n => `<tr><td>${n}</td><td>${res[n].total} يوم</td><td class="text-success fw-bold">${res[n].ح}</td><td class="text-danger">${res[n].غ}</td><td class="fw-bold text-success">${res[n].ح * res[n].rate} ج</td><td><button class="btn btn-sm btn-warning" onclick="editWorkerPresence('${n}')"><i class="fas fa-edit"></i></button></td></tr>`).join('');
     }
 
     function startOp(op, idx = -1) {
@@ -229,7 +238,7 @@
             const temp = d.current_weather.temperature, wind = d.current_weather.windspeed;
             document.getElementById('hWeather').innerText = `حرارة: ${temp}°C | رياح: ${wind} كم/س`;
             const tip = document.getElementById('weatherTip'); tip.style.display = 'block';
-            if(wind > 15) tip.innerHTML = `⚠️ رياح قوية (${wind} كم/س)؛ لا ننصح بالرش اليوم.`;
+            if(wind > 15) tip.innerHTML = `⚠️ رياح قوية؛ لا ننصح بالرش اليوم.`;
             else tip.innerHTML = "✅ الجو مثالي اليوم للرش والعمل الميداني.";
         });
     });
