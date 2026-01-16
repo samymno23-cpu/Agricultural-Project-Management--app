@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AGRO-AI SUPREME V57 | المهندس سامي</title>
+    <title>AGRO-AI SUPREME V58 | المهندس سامي</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
@@ -21,7 +21,7 @@
         .page-full.active { display: block; }
         .nav-dock { background: white; position: fixed; bottom: 0; width: 100%; display: flex; justify-content: space-around; padding: 15px; border-radius: 30px 30px 0 0; box-shadow: 0 -5px 25px rgba(0,0,0,0.05); z-index: 4000; }
         .f-row { background: #f9f9f9; border-radius: 15px; padding: 10px; margin-bottom: 10px; border: 1px dashed #ccc; }
-        .img-preview { width: 100%; max-height: 200px; object-fit: cover; border-radius: 15px; margin-top: 10px; display: none; }
+        .img-preview { width: 100%; max-height: 180px; object-fit: cover; border-radius: 15px; margin-top: 10px; display: none; border: 2px solid var(--gold); }
         @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
     </style>
 </head>
@@ -30,14 +30,14 @@
 <div id="toast" class="toast-notify"></div>
 
 <div id="homeView">
-    <div class="header-royal"><h4 id="hFarmName" class="fw-bold mb-0">...</h4><div id="hWeather" class="small opacity-75 mt-2">جاري التحديث...</div></div>
+    <div class="header-royal"><h4 id="hFarmName" class="fw-bold mb-0">...</h4><div id="hWeather" class="small opacity-75 mt-2">مزامنة الطقس...</div></div>
     <div class="container px-3">
         <div class="ai-banner">
             <div class="d-flex align-items-center justify-content-between mb-2">
-                <div class="d-flex align-items-center gap-2 text-success"><i class="fas fa-camera"></i> <b class="small">المهندس سامي AI:</b></div>
+                <div class="d-flex align-items-center gap-2 text-success"><i class="fas fa-edit"></i> <b class="small">المهندس سامي AI:</b></div>
                 <button class="btn btn-sm btn-dark rounded-pill px-3" onclick="genReport()">تقرير PDF</button>
             </div>
-            <p class="small mb-0 text-muted">تم تفعيل التوثيق بالصور لجميع العمليات الميدانية.</p>
+            <p class="small mb-0 text-muted">تم تفعيل زر "التعديل" في الأرشيف لإصلاح أي أخطاء في التسجيل.</p>
         </div>
 
         <div class="row g-2 my-4 text-center">
@@ -65,49 +65,28 @@
 
 <div id="opPage" class="page-full">
     <div class="back-nav d-flex gap-3 mb-4"><button class="btn btn-outline-dark rounded-circle" onclick="goHome()"><i class="fas fa-arrow-right"></i></button><h4 id="opTitleHeader" class="fw-bold mb-0 text-success"></h4></div>
-    
     <div id="opFields"></div>
-
-    <div id="fertilizerContainer" style="display:none;" class="mb-3">
-        <div id="fRows"></div>
-        <button class="btn btn-outline-primary btn-sm rounded-pill w-100 mt-2" onclick="addFertilizerRow()">+ إضافة صنف للخلطة</button>
-    </div>
-
+    <div id="fertilizerContainer" style="display:none;" class="mb-3"><div id="fRows"></div><button class="btn btn-outline-primary btn-sm rounded-pill w-100 mt-2" onclick="addFertilizerRow()">+ إضافة سماد للخلطة</button></div>
     <div class="panel-glass mt-3">
-        <label class="small fw-bold mb-2"><i class="fas fa-camera"></i> توثيق العملية بالصورة:</label>
+        <label class="small fw-bold mb-2">توثيق بالصورة:</label>
         <input type="file" id="opImgIn" class="form-control" accept="image/*" onchange="previewImg(this)">
         <img id="imgPrev" class="img-preview" src="">
     </div>
-
-    <button class="btn btn-success w-100 py-3 rounded-pill fw-bold mt-4" onclick="finalSave()">حفظ العملية وتوثيقها</button>
+    <button id="saveBtn" class="btn btn-success w-100 py-3 rounded-pill fw-bold mt-4 shadow" onclick="finalSave()">حفظ العملية</button>
 </div>
 
-<div id="staffPage" class="page-full">
-    <div class="back-nav d-flex gap-3 mb-4"><button class="btn btn-outline-dark rounded-circle" onclick="goHome()"><i class="fas fa-arrow-right"></i></button><h4 class="fw-bold mb-0">العمالة</h4></div>
-    <div class="panel-glass">
-        <input type="text" id="wNameIn" class="form-control mb-2" list="workersList" placeholder="اسم العامل..">
-        <datalist id="workersList"></datalist>
-        <div class="row g-2 mb-3"><div class="col-6"><input type="date" id="wStartDate" class="form-control" value="2026-01-01"></div><div class="col-6"><input type="number" id="wRate" class="form-control" placeholder="اليومية"></div></div>
-        <div class="d-flex gap-2 mb-4"><button class="btn btn-success flex-grow-1 rounded-pill" onclick="logWorker('حضور')">حضور</button><button class="btn btn-danger flex-grow-1 rounded-pill" onclick="logWorker('غياب')">غياب</button></div>
-        <div class="table-responsive"><table class="table table-sm text-center small"><thead class="table-dark"><tr><th>العامل</th><th>المدة</th><th>ح</th><th>غ</th><th>المستحقات</th><th>تعديل</th></tr></thead><tbody id="wTable"></tbody></table></div>
-    </div>
+<div id="archivePage" class="page-full">
+    <div class="back-nav d-flex gap-3 mb-4"><button class="btn btn-outline-dark rounded-circle" onclick="goHome()"><i class="fas fa-arrow-right"></i></button><h4 class="fw-bold mb-0">الأرشيف والتعديل</h4></div>
+    <button class="btn btn-dark w-100 rounded-pill mb-3 shadow-sm" onclick="genReport()">تحميل تقرير PDF كامل</button>
+    <div id="archL"></div>
 </div>
 
-<div id="zonesPage" class="page-full">
-    <div class="back-nav d-flex gap-3 mb-4"><button class="btn btn-outline-dark rounded-circle" onclick="goHome()"><i class="fas fa-arrow-right"></i></button><h4>خريطة الأحواض</h4></div>
-    <div class="panel-glass"><input type="text" id="zName" class="form-control mb-2" placeholder="اسم الحوض"><div class="row g-2 mb-3"><div class="col-6"><input type="number" id="zTrees" class="form-control" placeholder="الأشجار"></div><div class="col-6"><input type="text" id="zType" class="form-control" placeholder="الصنف"></div></div><button class="btn btn-success w-100 rounded-pill" onclick="addZone()">حفظ</button></div>
-    <div id="zonesList"></div>
-</div>
-
-<div id="stockPage" class="page-full">
-    <div class="back-nav d-flex gap-3 mb-4"><button class="btn btn-outline-dark rounded-circle" onclick="goHome()"><i class="fas fa-arrow-right"></i></button><h4>المخزن</h4></div>
-    <div class="panel-glass"><input type="text" id="skI" class="form-control mb-2" list="stockItemsList" placeholder="اسم الصنف.."><datalist id="stockItemsList"></datalist><input type="number" id="skQ" class="form-control mb-3" placeholder="الكمية"><button class="btn btn-success w-100 rounded-pill" onclick="addStk()">حفظ</button></div>
-    <div id="skL"></div>
-</div>
-
+<div id="staffPage" class="page-full"><div class="back-nav d-flex gap-3 mb-4"><button class="btn btn-outline-dark rounded-circle" onclick="goHome()"><i class="fas fa-arrow-right"></i></button><h4>العمالة</h4></div><div class="panel-glass"><input type="text" id="wNameIn" class="form-control mb-2" list="workersList" placeholder="اسم العامل.."><datalist id="workersList"></datalist><div class="row g-2 mb-3"><div class="col-6"><input type="date" id="wStartDate" class="form-control" value="2026-01-01"></div><div class="col-6"><input type="number" id="wRate" class="form-control" placeholder="اليومية"></div></div><div class="d-flex gap-2 mb-4"><button class="btn btn-success flex-grow-1 rounded-pill" onclick="logWorker('حضور')">حضور</button><button class="btn btn-danger flex-grow-1 rounded-pill" onclick="logWorker('غياب')">غياب</button></div><div class="table-responsive"><table class="table table-sm text-center small"><thead class="table-dark"><tr><th>العامل</th><th>المدة</th><th>ح</th><th>غ</th><th>المبلغ</th><th>تعديل</th></tr></thead><tbody id="wTable"></tbody></table></div></div></div>
+<div id="zonesPage" class="page-full"><div class="back-nav d-flex gap-3 mb-4"><button class="btn btn-outline-dark rounded-circle" onclick="goHome()"><i class="fas fa-arrow-right"></i></button><h4>الأحواض</h4></div><div class="panel-glass"><input type="text" id="zName" class="form-control mb-2" placeholder="اسم الحوض"><div class="row g-2 mb-3"><div class="col-6"><input type="number" id="zTrees" class="form-control" placeholder="الأشجار"></div><div class="col-6"><input type="text" id="zType" class="form-control" placeholder="الصنف"></div></div><button class="btn btn-success w-100 rounded-pill" onclick="addZone()">حفظ</button></div><div id="zonesList"></div></div>
+<div id="stockPage" class="page-full"><div class="back-nav d-flex gap-3 mb-4"><button class="btn btn-outline-dark rounded-circle" onclick="goHome()"><i class="fas fa-arrow-right"></i></button><h4>المخزن</h4></div><div class="panel-glass"><input type="text" id="skI" class="form-control mb-2" list="stockItemsList" placeholder="اسم الصنف.."><datalist id="stockItemsList"></datalist><input type="number" id="skQ" class="form-control mb-3" placeholder="الكمية"><button class="btn btn-success w-100 rounded-pill" onclick="addStk()">حفظ</button></div><div id="skL"></div></div>
 <div id="toolsPage" class="page-full"><div class="back-nav d-flex gap-3 mb-4"><button class="btn btn-outline-dark rounded-circle" onclick="goHome()"><i class="fas fa-arrow-right"></i></button><h4>مخزن الأدوات</h4></div><div class="panel-glass"><input type="text" id="tName" class="form-control mb-2" placeholder="اسم الأداة"><input type="number" id="tQty" class="form-control mb-3" placeholder="العدد"><button class="btn btn-primary w-100 rounded-pill" onclick="addTool()">إضافة</button></div><div id="toolsList"></div></div>
-<div id="archivePage" class="page-full"><div class="back-nav d-flex gap-3 mb-4"><button class="btn btn-outline-dark rounded-circle" onclick="goHome()"><i class="fas fa-arrow-right"></i></button><h4>الأرشيف الموثق</h4></div><button class="btn btn-dark w-100 rounded-pill mb-3" onclick="genReport()">تحميل PDF</button><div id="archL"></div></div>
 <div id="financePage" class="page-full"><div class="back-nav d-flex gap-3 mb-4"><button class="btn btn-outline-dark rounded-circle" onclick="goHome()"><i class="fas fa-arrow-right"></i></button><h4>المالية</h4></div><div class="panel-glass"><input type="number" id="fA" class="form-control mb-2" placeholder="المبلغ"><select id="fT" class="form-select mb-2"><option value="إيراد">إيراد (+)</option><option value="مصروف">مصروف (-)</option></select><input type="text" id="fD" class="form-control mb-3" placeholder="البيان"><button class="btn btn-dark w-100 rounded-pill" onclick="addFin()">حفظ</button></div><div id="fL"></div></div>
+<div id="farmsPage" class="page-full"><div class="back-nav d-flex gap-3 mb-4"><button class="btn btn-outline-dark rounded-circle" onclick="goHome()"><i class="fas fa-arrow-right"></i></button><h4>المزارع والنسخ</h4></div><div id="frmL"></div><button class="btn btn-outline-danger w-100 mt-3 rounded-pill" onclick="exportDB()">نسخة احتياطية JSON</button></div>
 
 <div class="nav-dock">
     <button class="dock-link active" onclick="goHome()"><i class="fas fa-home fs-4"></i></button>
@@ -115,101 +94,91 @@
     <button class="dock-link" onclick="openPage('farmsPage')"><i class="fas fa-layer-group fs-4"></i></button>
 </div>
 
-<div id="farmsPage" class="page-full"><div class="back-nav d-flex gap-3 mb-4"><button class="btn btn-outline-dark rounded-circle" onclick="goHome()"><i class="fas fa-arrow-right"></i></button><h4>المزارع والنسخ</h4></div><div id="frmL"></div><button class="btn btn-outline-danger w-100 mt-3 rounded-pill" onclick="exportDB()">نسخة احتياطية</button></div>
-
 <script>
     const ST_KEY = 'AGRO_AI_PERMANENT_SAMI';
     let db = JSON.parse(localStorage.getItem(ST_KEY)) || { cur: 'f1', farms: { f1: { name: "مزرعة المهندس سامي", logs: [], kg: 0, stock: {}, staff: [], fin: [], zones: [], tools: {} } } };
-    let activeOpT = ''; let currentImgData = "";
+    let activeOpT = ''; let editingLogIdx = -1; let currentImgData = "";
 
     function showNotify(msg) { const t = document.getElementById('toast'); t.innerText = msg; t.style.display = 'block'; setTimeout(() => { t.style.display = 'none'; }, 3000); }
     function sync() { localStorage.setItem(ST_KEY, JSON.stringify(db)); }
     function openPage(id) { document.querySelectorAll('.page-full').forEach(p => p.classList.remove('active')); document.getElementById(id).classList.add('active'); if(id==='archivePage') renderArch(); if(id==='staffPage') renderStaff(); if(id==='zonesPage') renderZones(); if(id==='stockPage') renderStk(); if(id==='financePage') renderFin(); if(id==='toolsPage') renderTools(); if(id==='farmsPage') renderFrms(); }
-    function goHome() { document.querySelectorAll('.page-full').forEach(p => p.classList.remove('active')); renderHome(); currentImgData=""; }
+    function goHome() { document.querySelectorAll('.page-full').forEach(p => p.classList.remove('active')); renderHome(); editingLogIdx = -1; }
 
-    // نظام الصور
-    function previewImg(input) {
-        if (input.files && input.files[0]) {
-            const reader = new FileReader();
-            reader.onload = (e) => {
-                currentImgData = e.target.result;
-                document.getElementById('imgPrev').src = currentImgData;
-                document.getElementById('imgPrev').style.display = 'block';
-            };
-            reader.readAsDataURL(input.files[0]);
-        }
-    }
+    function previewImg(input) { if (input.files && input.files[0]) { const reader = new FileReader(); reader.onload = (e) => { currentImgData = e.target.result; document.getElementById('imgPrev').src = currentImgData; document.getElementById('imgPrev').style.display = 'block'; }; reader.readAsDataURL(input.files[0]); } }
 
-    function startOp(op) {
-        activeOpT = op; document.getElementById('opTitleHeader').innerText = op;
+    function startOp(op, idx = -1) {
+        activeOpT = op; editingLogIdx = idx;
+        document.getElementById('opTitleHeader').innerText = (idx === -1 ? '' : 'تعديل ') + op;
         const area = document.getElementById('opFields'); const f = db.farms[db.cur]; area.innerHTML = '';
         document.getElementById('fertilizerContainer').style.display = (op === 'تسميد') ? 'block' : 'none';
-        document.getElementById('imgPrev').style.display = 'none'; document.getElementById('opImgIn').value = ""; currentImgData = "";
         
+        let existingMsg = idx !== -1 ? f.logs[idx].m : "";
+        currentImgData = idx !== -1 ? (f.logs[idx].img || "") : "";
+        if(currentImgData) { document.getElementById('imgPrev').src = currentImgData; document.getElementById('imgPrev').style.display = 'block'; } else { document.getElementById('imgPrev').style.display = 'none'; }
+
         let zoneOpts = (f.zones || []).map(z => `<option value="${z.n}">${z.n}</option>`).join('');
-        if(op === 'ري' || op === 'تسميد') { area.innerHTML = `<label class="small fw-bold">الحوض:</label><select id="vZone" class="form-select mb-3">${zoneOpts || '<option>لا توجد أحواض</option>'}</select>`; if(op === 'تسميد') { document.getElementById('fRows').innerHTML = ''; addFertilizerRow(); } else { area.innerHTML += `<textarea id="vText" class="form-control" rows="3" placeholder="ملاحظات.."></textarea>`; } }
-        else if(op === 'حصاد') { area.innerHTML = `<input type="number" id="v1" class="form-control" placeholder="كجم">`; }
-        else { area.innerHTML = `<textarea id="vText" class="form-control" rows="5" placeholder="اكتب تفاصيل العملية هنا.."></textarea>`; }
+        if(op === 'ري' || op === 'تسميد') {
+            area.innerHTML = `<label class="small fw-bold">الحوض:</label><select id="vZone" class="form-select mb-3">${zoneOpts || '<option>لا توجد أحواض</option>'}</select>`;
+            if(op === 'تسميد') { document.getElementById('fRows').innerHTML = ''; addFertilizerRow(); }
+            else { area.innerHTML += `<textarea id="vText" class="form-control" rows="3" placeholder="تفاصيل..">${existingMsg}</textarea>`; }
+        } else if(op === 'حصاد') {
+            let val = existingMsg.match(/\d+/) || "";
+            area.innerHTML = `<input type="number" id="v1" class="form-control" value="${val}" placeholder="كجم">`;
+        } else {
+            area.innerHTML = `<textarea id="vText" class="form-control" rows="5" placeholder="اكتب هنا..">${existingMsg}</textarea>`;
+        }
         openPage('opPage');
     }
 
     function finalSave() {
         const f = db.farms[db.cur]; let msg = ""; const vZ = document.getElementById('vZone')?.value || "عام";
-        if(activeOpT === 'تسميد') { let items = []; document.querySelectorAll('.f-row').forEach(row => { let n = row.querySelector('.f-name').value, q = parseFloat(row.querySelector('.f-qty').value); if(n && q && f.stock[n]>=q) { f.stock[n]-=q; items.push(`${n}(${q})`); } }); if(items.length===0) return showNotify("الرصيد لا يكفي"); msg = `تسميد خلطة [${vZ}]: ` + items.join(' + '); }
-        else if(activeOpT === 'حصاد') { let q = parseFloat(document.getElementById('v1').value || 0); f.kg += q; msg = `حصاد ${q} كجم`; }
+        if(activeOpT === 'تسميد') {
+            let items = []; document.querySelectorAll('.f-row').forEach(row => { let n = row.querySelector('.f-name').value, q = parseFloat(row.querySelector('.f-qty').value); if(n && q && (editingLogIdx !== -1 || f.stock[n]>=q)) { if(editingLogIdx === -1) f.stock[n]-=q; items.push(`${n}(${q})`); } });
+            if(items.length===0) return showNotify("تحقق من البيانات"); msg = `تسميد خلطة [${vZ}]: ` + items.join(' + ');
+        } else if(activeOpT === 'حصاد') { let q = parseFloat(document.getElementById('v1').value || 0); if(editingLogIdx === -1) f.kg += q; msg = `حصاد ${q} كجم`; }
         else { let t = document.getElementById('vText').value; msg = activeOpT==='ري' ? `ري [${vZ}]: ${t}` : t; }
         
-        f.logs.push({ d: new Date().toLocaleString('ar-EG'), t: activeOpT, m: msg, img: currentImgData });
-        sync(); goHome(); showNotify("تم الحفظ والتوثيق");
+        if(editingLogIdx === -1) f.logs.push({ d: new Date().toLocaleString('ar-EG'), t: activeOpT, m: msg, img: currentImgData });
+        else { f.logs[editingLogIdx].m = msg; f.logs[editingLogIdx].img = currentImgData; }
+        sync(); goHome(); showNotify("تم الحفظ بنجاح");
     }
 
-    // إدارة العمالة والمدد (منع NaN)
+    function renderArch() {
+        document.getElementById('archL').innerHTML = (db.farms[db.cur].logs || []).map((l, idx) => `
+            <div class="panel-glass shadow-sm">
+                <div class="d-flex justify-content-between align-items-start">
+                    <div><span class="badge bg-success mb-2">${l.t}</span><br><b>${l.m}</b><br><small class="text-muted">${l.d}</small></div>
+                    <button class="btn btn-sm btn-warning rounded-pill px-3" onclick="startOp('${l.t}', ${idx})"><i class="fas fa-edit"></i> تعديل</button>
+                </div>
+                ${l.img ? `<img src="${l.img}" class="img-preview" style="display:block;">` : ''}
+            </div>
+        `).reverse().join('');
+    }
+
+    // وظائف المزامنة (مستقرة)
+    function addZone() { let n = document.getElementById('zName').value, t = document.getElementById('zTrees').value, ty = document.getElementById('zType').value; if(n && t) { if(!db.farms[db.cur].zones) db.farms[db.cur].zones = []; db.farms[db.cur].zones.push({ n, t, ty }); sync(); renderZones(); showNotify("تم حفظ الحوض"); } }
+    function renderZones() { document.getElementById('zonesList').innerHTML = (db.farms[db.cur].zones || []).map((z, idx) => `<div class="panel-glass d-flex justify-content-between align-items-center"><div><b>${z.n} (${z.ty || 'بدون صنف'})</b><br><small>${z.t} شجرة</small></div><button class="btn btn-sm btn-warning" onclick="editZone(${idx})">تعديل</button></div>`).join(''); }
+    function editZone(idx) { let z = db.farms[db.cur].zones[idx]; document.getElementById('zName').value = z.n; document.getElementById('zTrees').value = z.t; document.getElementById('zType').value = z.ty; db.farms[db.cur].zones.splice(idx, 1); renderZones(); }
+    function addFertilizerRow() { const f = db.farms[db.cur]; let opts = Object.keys(f.stock).map(k => `<option value="${k}">${k}</option>`).join(''); const div = document.createElement('div'); div.className = 'f-row'; div.innerHTML = `<select class="form-select mb-2 f-name">${opts}</select><input type="number" class="form-control f-qty" placeholder="الكمية">`; document.getElementById('fRows').appendChild(div); }
+    function addStk() { let n = document.getElementById('skI').value, q = document.getElementById('skQ').value; if(n && q){ db.farms[db.cur].stock[n] = (db.farms[db.cur].stock[n]||0) + parseFloat(q); sync(); renderStk(); showNotify("تم التحديث"); } }
+    function renderStk() { let list = document.getElementById('stockItemsList'); list.innerHTML = ''; let items = Object.keys(db.farms[db.cur].stock); items.forEach(k => list.innerHTML += `<option value="${k}">`); document.getElementById('skL').innerHTML = items.map(k => `<div class="panel-glass mb-2 d-flex justify-content-between"><b>${k}</b><span>${db.farms[db.cur].stock[k]}</span></div>`).join(''); }
+    function addTool() { let n = document.getElementById('tName').value, q = document.getElementById('tQty').value; if(n && q){ if(!db.farms[db.cur].tools) db.farms[db.cur].tools = {}; db.farms[db.cur].tools[n] = (db.farms[db.cur].tools[n]||0) + parseInt(q); sync(); renderTools(); showNotify("تم الحفظ"); } }
+    function renderTools() { document.getElementById('toolsList').innerHTML = Object.keys(db.farms[db.cur].tools || {}).map(k => `<div class="panel-glass d-flex justify-content-between"><b>${k}</b><span>${db.farms[db.cur].tools[k]}</span></div>`).join(''); }
     function logWorker(s) { let n = document.getElementById('wNameIn').value, r = document.getElementById('wRate').value, sd = document.getElementById('wStartDate').value; if(!n || !r) return showNotify("أدخل البيانات"); db.farms[db.cur].staff.push({ n, s, r: parseFloat(r), start: sd || '2026-01-01', d: new Date().toISOString() }); sync(); renderStaff(); showNotify("تم التسجيل"); }
     function renderStaff() {
         let res = {}; db.farms[db.cur].staff.forEach(e => { if(!res[e.n]) { let d1 = new Date(e.start); let diff = isNaN(d1.getTime()) ? 0 : Math.floor((new Date() - d1) / 86400000) + 1; res[e.n] = {ح:0, غ:0, r:e.r, start:e.start, total: diff}; } if(e.s==='حضور') res[e.n].ح++; else res[e.n].غ++; });
         document.getElementById('wTable').innerHTML = Object.keys(res).map(n => `<tr><td>${n}</td><td>${res[n].total} يوم</td><td>${res[n].ح}</td><td>${res[n].غ}</td><td>${res[n].ح * res[n].r} ج</td><td><button class="btn btn-sm btn-warning" onclick="editWorker('${n}')">تعديل</button></td></tr>`).join('');
     }
     function editWorker(name) { let p = prompt("حضور جديد:"), a = prompt("غياب جديد:"); if(p==null || a==null) return; let workers = db.farms[db.cur].staff.filter(w => w.n === name); if(workers.length > 0) { let base = workers[0]; db.farms[db.cur].staff = db.farms[db.cur].staff.filter(w => w.n !== name); for(let i=0;i<parseInt(p);i++) db.farms[db.cur].staff.push({...base, s:'حضور'}); for(let i=0;i<parseInt(a);i++) db.farms[db.cur].staff.push({...base, s:'غياب'}); sync(); renderStaff(); } }
-
-    // إدارة الأحواض مع الصنف بين قوسين
-    function addZone() { let n = document.getElementById('zName').value, t = document.getElementById('zTrees').value, ty = document.getElementById('zType').value; if(n && t) { if(!db.farms[db.cur].zones) db.farms[db.cur].zones = []; db.farms[db.cur].zones.push({ n, t, ty }); sync(); renderZones(); showNotify("تم حفظ الحوض"); } }
-    function renderZones() { document.getElementById('zonesList').innerHTML = (db.farms[db.cur].zones || []).map((z, idx) => `<div class="panel-glass d-flex justify-content-between align-items-center"><div><b>${z.n} (${z.ty || 'بدون صنف'})</b><br><small>${z.t} شجرة</small></div><button class="btn btn-sm btn-warning" onclick="editZone(${idx})">تعديل</button></div>`).join(''); }
-    function editZone(idx) { let z = db.farms[db.cur].zones[idx]; document.getElementById('zName').value = z.n; document.getElementById('zTrees').value = z.t; document.getElementById('zType').value = z.ty; db.farms[db.cur].zones.splice(idx, 1); renderZones(); }
-
-    function addFertilizerRow() { const f = db.farms[db.cur]; let opts = Object.keys(f.stock).map(k => `<option value="${k}">${k}</option>`).join(''); const div = document.createElement('div'); div.className = 'f-row'; div.innerHTML = `<select class="form-select mb-2 f-name">${opts}</select><input type="number" class="form-control f-qty" placeholder="الكمية">`; document.getElementById('fRows').appendChild(div); }
-    function addStk() { let n = document.getElementById('skI').value, q = document.getElementById('skQ').value; if(n && q){ db.farms[db.cur].stock[n] = (db.farms[db.cur].stock[n]||0) + parseFloat(q); sync(); renderStk(); showNotify("تم التحديث"); } }
-    function renderStk() { let list = document.getElementById('stockItemsList'); list.innerHTML = ''; let items = Object.keys(db.farms[db.cur].stock); items.forEach(k => list.innerHTML += `<option value="${k}">`); document.getElementById('skL').innerHTML = items.map(k => `<div class="panel-glass d-flex justify-content-between"><b>${k}</b><span>${db.farms[db.cur].stock[k]}</span></div>`).join(''); }
-    function addTool() { let n = document.getElementById('tName').value, q = document.getElementById('tQty').value; if(n && q){ if(!db.farms[db.cur].tools) db.farms[db.cur].tools = {}; db.farms[db.cur].tools[n] = (db.farms[db.cur].tools[n]||0) + parseInt(q); sync(); renderTools(); showNotify("تم الحفظ"); } }
-    function renderTools() { document.getElementById('toolsList').innerHTML = Object.keys(db.farms[db.cur].tools || {}).map(k => `<div class="panel-glass d-flex justify-content-between"><b>${k}</b><span>${db.farms[db.cur].tools[k]}</span></div>`).join(''); }
-    function renderHome() { const f = db.farms[db.cur]; document.getElementById('hFarmName').innerText = f.name; document.getElementById('vKg').innerText = f.kg; document.getElementById('vStk').innerText = Object.keys(f.stock).length; let c = 0; (f.fin||[]).forEach(i => c += i.a); document.getElementById('vCash').innerText = c; }
     function addFin() { let a = document.getElementById('fA').value, t = document.getElementById('fT').value, d = document.getElementById('fD').value; if(a && d){ db.farms[db.cur].fin.push({ a: (t==='إيراد'?1:-1)*parseFloat(a), d, dt: new Date().toLocaleDateString('ar-EG') }); sync(); showNotify("تم الحفظ"); } }
     function renderFin() { document.getElementById('fL').innerHTML = (db.farms[db.cur].fin||[]).map(m => `<div class="panel-glass d-flex justify-content-between small"><b>${m.d}</b><span class="${m.a>0?'text-success':'text-danger'}">${m.a}</span></div>`).reverse().join(''); }
-    
-    function renderArch() { 
-        document.getElementById('archL').innerHTML = (db.farms[db.cur].logs || []).map(l => `
-            <div class="panel-glass small">
-                <b>${l.t}:</b> ${l.m}<br><small>${l.d}</small>
-                ${l.img ? `<img src="${l.img}" class="img-preview" style="display:block; margin-top:10px;">` : ''}
-            </div>
-        `).reverse().join(''); 
-    }
-
-    function genReport() { 
-        let h = `<div dir="rtl" style="font-family:Arial; padding:20px;"><h2>تقرير المهندس سامي - المزرعة</h2><table border="1" style="width:100%; border-collapse:collapse; text-align:center;"><tr><th>التاريخ</th><th>العملية</th><th>التفاصيل والتوثيق</th></tr>`; 
-        (db.farms[db.cur].logs || []).forEach(l => {
-            h += `<tr><td>${l.d}</td><td>${l.t}</td><td>${l.m} ${l.img ? `<br><img src="${l.img}" style="width:100px;">` : ''}</td></tr>`;
-        });
-        html2pdf().from(h + "</table></div>").save(`AgroReport_Samy_${Date.now()}.pdf`); 
-    }
-    
+    function renderHome() { const f = db.farms[db.cur]; document.getElementById('hFarmName').innerText = f.name; document.getElementById('vKg').innerText = f.kg; document.getElementById('vStk').innerText = Object.keys(f.stock).length; let c = 0; (f.fin||[]).forEach(i => c += i.a); document.getElementById('vCash').innerText = c; }
+    function genReport() { let h = `<div dir="rtl" style="font-family:Arial; padding:20px;"><h2>تقرير المهندس سامي</h2><table border="1" style="width:100%; border-collapse:collapse; text-align:center;"><tr><th>التاريخ</th><th>العملية</th><th>التفاصيل</th></tr>`; (db.farms[db.cur].logs || []).forEach(l => { h += `<tr><td>${l.d}</td><td>${l.t}</td><td>${l.m} ${l.img ? `<br><img src="${l.img}" style="width:100px;">` : ''}</td></tr>`; }); html2pdf().from(h + "</table></div>").save(`AgroReport_Samy_${Date.now()}.pdf`); }
     function exportDB() { const b = new Blob([JSON.stringify(db)], {type:"application/json"}); const a = document.createElement('a'); a.href=URL.createObjectURL(b); a.download=`Mazar3i_Backup.json`; a.click(); }
     function renderFrms() { document.getElementById('frmL').innerHTML = Object.keys(db.farms).map(id => `<div class="panel-glass ${id===db.cur?'border-success border':''}" onclick="selFrm('${id}')"><b>${db.farms[id].name}</b></div>`).join(''); }
     function selFrm(id) { db.cur = id; sync(); goHome(); }
 
-    navigator.geolocation.getCurrentPosition(p => {
-        fetch(`https://api.open-meteo.com/v1/forecast?latitude=${p.coords.latitude}&longitude=${p.coords.longitude}&current_weather=true`)
-        .then(r => r.json()).then(d => { document.getElementById('hWeather').innerText = `حرارة المزرعة: ${d.current_weather.temperature}°C`; });
-    });
+    navigator.geolocation.getCurrentPosition(p => { fetch(`https://api.open-meteo.com/v1/forecast?latitude=${p.coords.latitude}&longitude=${p.coords.longitude}&current_weather=true`).then(r => r.json()).then(d => { document.getElementById('hWeather').innerText = `حرارة المزرعة: ${d.current_weather.temperature}°C`; }); });
     renderHome();
 </script>
 </body>
