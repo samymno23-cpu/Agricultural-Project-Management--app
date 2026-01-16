@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AGRO-AI SUPREME V60 | المهندس سامي</title>
+    <title>AGRO-AI SUPREME V61 | المهندس سامي</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
@@ -11,6 +11,7 @@
         :root { --p: #0f3d0e; --gold: #d4af37; --bg: #f8faf8; }
         body { background: var(--bg); font-family: 'Segoe UI', Tahoma, sans-serif; padding-bottom: 100px; color: #1a1a1a; }
         .header-royal { background: linear-gradient(135deg, var(--p), #051a05); color: white; padding: 40px 20px; border-radius: 0 0 50px 50px; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.2); }
+        .ai-banner { background: #fffcf0; border-right: 6px solid var(--gold); border-radius: 20px; padding: 20px; margin-top: -35px; position: relative; z-index: 10; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
         .panel-glass { background: white; border-radius: 25px; padding: 20px; box-shadow: 0 8px 25px rgba(0,0,0,0.05); margin-bottom: 20px; border: 1px solid #eee; }
         .grid-master { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
         .btn-master { border: none; border-radius: 22px; padding: 18px 5px; background: white; box-shadow: 0 4px 12px rgba(0,0,0,0.04); display: flex; flex-direction: column; align-items: center; gap: 8px; transition: 0.2s; text-decoration: none; color: inherit; cursor: pointer; }
@@ -29,7 +30,21 @@
 
 <div id="homeView">
     <div class="header-royal"><h4 id="hFarmName" class="fw-bold mb-0">...</h4><div id="hWeather" class="small opacity-75 mt-2">مزامنة الطقس...</div></div>
-    <div class="container px-3 mt-4">
+    <div class="container px-3">
+        <div class="ai-banner">
+            <div class="d-flex align-items-center justify-content-between mb-2">
+                <div class="d-flex align-items-center gap-2 text-success"><i class="fas fa-check-double"></i> <b class="small">المهندس سامي: النظام المتكامل</b></div>
+                <button class="btn btn-sm btn-dark rounded-pill px-3" onclick="genReport()">تقرير PDF</button>
+            </div>
+            <p class="small mb-0 text-muted">تم استعادة كافة الميزات: خلطات التسميد، الصور، العمالة، ومخزن الأدوات.</p>
+        </div>
+
+        <div class="row g-2 my-4 text-center">
+            <div class="col-4"><div class="panel-glass p-2 mb-0"><small class="text-muted d-block small">المحصول</small><b id="vKg" class="text-success fs-5">0</b></div></div>
+            <div class="col-4"><div class="panel-glass p-2 mb-0"><small class="text-muted d-block small">المالية</small><b id="vCash" class="text-danger fs-5">0</b></div></div>
+            <div class="col-4"><div class="panel-glass p-2 mb-0"><small class="text-muted d-block small">المخزن</small><b id="vStk" class="text-primary fs-5">0</b></div></div>
+        </div>
+
         <div class="grid-master">
             <button class="btn-master" onclick="startOp('ري')"><i class="fas fa-droplet"></i><span>ري</span></button>
             <button class="btn-master" onclick="startOp('تسميد')"><i class="fas fa-flask"></i><span>تسميد</span></button>
@@ -44,44 +59,45 @@
             <button class="btn-master" onclick="openPage('stockPage')"><i class="fas fa-warehouse"></i><span>المخزن</span></button>
             <button class="btn-master" onclick="startOp('أخرى')"><i class="fas fa-plus-circle"></i><span>أخرى</span></button>
         </div>
-        <button class="btn btn-dark w-100 mt-4 rounded-pill py-3 shadow-sm" onclick="genReport()">تقرير PDF السريع</button>
     </div>
 </div>
 
 <div id="opPage" class="page-full">
-    <div class="back-nav d-flex gap-3 mb-4 align-items-center">
-        <button class="btn btn-outline-dark rounded-circle" onclick="goHome()"><i class="fas fa-arrow-right"></i></button>
-        <h4 id="opTitleHeader" class="fw-bold mb-0 text-success"></h4>
-    </div>
-    
+    <div class="back-nav d-flex gap-3 mb-4"><button class="btn btn-outline-dark rounded-circle" onclick="goHome()"><i class="fas fa-arrow-right"></i></button><h4 id="opTitleHeader" class="fw-bold mb-0 text-success"></h4></div>
     <div id="opFields"></div>
-
-    <div id="fertilizerSection" style="display:none;" class="mb-3">
-        <div id="fRows"></div>
-        <button class="btn btn-outline-primary btn-sm rounded-pill w-100 mt-2" onclick="addFertilizerRow()">+ إضافة سماد للخلطة</button>
-    </div>
-
+    <div id="fertilizerSection" style="display:none;" class="mb-3"><div id="fRows"></div><button class="btn btn-outline-primary btn-sm rounded-pill w-100 mt-2" onclick="addFertilizerRow()">+ إضافة سماد للخلطة</button></div>
     <div class="panel-glass mt-3">
-        <label class="small fw-bold mb-2">صورة توثيقية:</label>
+        <label class="small fw-bold mb-2"><i class="fas fa-camera"></i> توثيق بالصورة:</label>
         <input type="file" id="opImgIn" class="form-control" accept="image/*" onchange="previewImg(this)">
         <img id="imgPrev" class="img-preview">
     </div>
-
-    <button class="btn btn-success w-100 py-3 rounded-pill fw-bold mt-4 shadow" onclick="finalSave()">تأكيد الحفظ النهائي</button>
+    <button class="btn btn-success w-100 py-3 rounded-pill fw-bold mt-4 shadow" onclick="finalSave()">حفظ العملية وتوثيقها</button>
 </div>
 
-<div id="archivePage" class="page-full">
-    <div class="back-nav d-flex gap-3 mb-4 align-items-center">
-        <button class="btn btn-outline-dark rounded-circle" onclick="goHome()"><i class="fas fa-arrow-right"></i></button>
-        <h4 class="fw-bold mb-0">الأرشيف والتعديل</h4>
+<div id="staffPage" class="page-full">
+    <div class="back-nav d-flex gap-3 mb-4"><button class="btn btn-outline-dark rounded-circle" onclick="goHome()"><i class="fas fa-arrow-right"></i></button><h4 class="fw-bold mb-0">العمالة</h4></div>
+    <div class="panel-glass">
+        <input type="text" id="wNameIn" class="form-control mb-2" list="workersList" placeholder="اسم العامل.."><datalist id="workersList"></datalist>
+        <div class="row g-2 mb-3"><div class="col-6"><label class="small fw-bold">تاريخ البدء:</label><input type="date" id="wStartDate" class="form-control" value="2026-01-01"></div><div class="col-6"><label class="small fw-bold">اليومية:</label><input type="number" id="wRate" class="form-control" placeholder="جنيه"></div></div>
+        <div class="d-flex gap-2"><button class="btn btn-success flex-grow-1 rounded-pill" onclick="logWorker('حضور')">حضور</button><button class="btn btn-danger flex-grow-1 rounded-pill" onclick="logWorker('غياب')">غياب</button></div>
+        <div class="table-responsive mt-3"><table class="table table-sm text-center small"><thead class="table-dark"><tr><th>العامل</th><th>المدة</th><th>ح</th><th>غ</th><th>المبلغ</th><th>تعديل</th></tr></thead><tbody id="wTable"></tbody></table></div>
     </div>
-    <div id="archL"></div>
 </div>
 
-<div id="staffPage" class="page-full"><div class="back-nav d-flex gap-3 mb-4"><button class="btn btn-outline-dark rounded-circle" onclick="goHome()"><i class="fas fa-arrow-right"></i></button><h4>العمالة</h4></div><div class="panel-glass"><input type="text" id="wNameIn" class="form-control mb-2" list="workersList" placeholder="اسم العامل.."><datalist id="workersList"></datalist><div class="row g-2 mb-3"><div class="col-6"><input type="date" id="wStartDate" class="form-control" value="2026-01-01"></div><div class="col-6"><input type="number" id="wRate" class="form-control" placeholder="اليومية"></div></div><div class="d-flex gap-2"><button class="btn btn-success flex-grow-1 rounded-pill" onclick="logWorker('حضور')">حضور</button><button class="btn btn-danger flex-grow-1 rounded-pill" onclick="logWorker('غياب')">غياب</button></div><div class="table-responsive mt-3"><table class="table table-sm text-center small"><thead class="table-dark"><tr><th>العامل</th><th>المدة</th><th>ح</th><th>غ</th><th>المبلغ</th><th>تعديل</th></tr></thead><tbody id="wTable"></tbody></table></div></div></div>
-<div id="zonesPage" class="page-full"><div class="back-nav d-flex gap-3 mb-4"><button class="btn btn-outline-dark rounded-circle" onclick="goHome()"><i class="fas fa-arrow-right"></i></button><h4>الأحواض</h4></div><div class="panel-glass"><input type="text" id="zName" class="form-control mb-2" placeholder="اسم الحوض"><div class="row g-2 mb-3"><div class="col-6"><input type="number" id="zTrees" class="form-control" placeholder="الأشجار"></div><div class="col-6"><input type="text" id="zType" class="form-control" placeholder="الصنف"></div></div><button class="btn btn-success w-100 rounded-pill" onclick="addZone()">حفظ</button></div><div id="zonesList"></div></div>
-<div id="stockPage" class="page-full"><div class="back-nav d-flex gap-3 mb-4"><button class="btn btn-outline-dark rounded-circle" onclick="goHome()"><i class="fas fa-arrow-right"></i></button><h4>المخزن</h4></div><div class="panel-glass"><input type="text" id="skI" class="form-control mb-2" list="stockItemsList" placeholder="صنف السماد/المبيد.."><datalist id="stockItemsList"></datalist><input type="number" id="skQ" class="form-control mb-3" placeholder="الكمية"><button class="btn btn-success w-100 rounded-pill" onclick="addStk()">تحديث الرصيد</button></div><div id="skL"></div></div>
+<div id="zonesPage" class="page-full">
+    <div class="back-nav d-flex gap-3 mb-4"><button class="btn btn-outline-dark rounded-circle" onclick="goHome()"><i class="fas fa-arrow-right"></i></button><h4>الأحواض</h4></div>
+    <div class="panel-glass"><input type="text" id="zName" class="form-control mb-2" placeholder="اسم الحوض"><div class="row g-2 mb-3"><div class="col-6"><input type="number" id="zTrees" class="form-control" placeholder="الأشجار"></div><div class="col-6"><input type="text" id="zType" class="form-control" placeholder="الصنف"></div></div><button class="btn btn-success w-100 rounded-pill" onclick="addZone()">حفظ</button></div>
+    <div id="zonesList"></div>
+</div>
+
+<div id="stockPage" class="page-full">
+    <div class="back-nav d-flex gap-3 mb-4"><button class="btn btn-outline-dark rounded-circle" onclick="goHome()"><i class="fas fa-arrow-right"></i></button><h4>المخزن</h4></div>
+    <div class="panel-glass"><input type="text" id="skI" class="form-control mb-2" list="stockItemsList" placeholder="صنف السماد/المبيد.."><datalist id="stockItemsList"></datalist><input type="number" id="skQ" class="form-control mb-3" placeholder="الكمية"><button class="btn btn-success w-100 rounded-pill" onclick="addStk()">تحديث الرصيد</button></div>
+    <div id="skL"></div>
+</div>
+
 <div id="toolsPage" class="page-full"><div class="back-nav d-flex gap-3 mb-4"><button class="btn btn-outline-dark rounded-circle" onclick="goHome()"><i class="fas fa-arrow-right"></i></button><h4>مخزن الأدوات</h4></div><div class="panel-glass"><input type="text" id="tName" class="form-control mb-2" placeholder="اسم الأداة"><input type="number" id="tQty" class="form-control mb-3" placeholder="العدد"><button class="btn btn-primary w-100 rounded-pill" onclick="addTool()">إضافة</button></div><div id="toolsList"></div></div>
+<div id="archivePage" class="page-full"><div class="back-nav d-flex gap-3 mb-4"><button class="btn btn-outline-dark rounded-circle" onclick="goHome()"><i class="fas fa-arrow-right"></i></button><h4>الأرشيف والتعديل</h4></div><div id="archL"></div></div>
 <div id="financePage" class="page-full"><div class="back-nav d-flex gap-3 mb-4"><button class="btn btn-outline-dark rounded-circle" onclick="goHome()"><i class="fas fa-arrow-right"></i></button><h4>المالية</h4></div><div class="panel-glass"><input type="number" id="fA" class="form-control mb-2" placeholder="المبلغ"><select id="fT" class="form-select mb-2"><option value="إيراد">إيراد (+)</option><option value="مصروف">مصروف (-)</option></select><input type="text" id="fD" class="form-control mb-3" placeholder="البيان"><button class="btn btn-dark w-100 rounded-pill" onclick="addFin()">حفظ</button></div><div id="fL"></div></div>
 <div id="farmsPage" class="page-full"><div class="back-nav d-flex gap-3 mb-4"><button class="btn btn-outline-dark rounded-circle" onclick="goHome()"><i class="fas fa-arrow-right"></i></button><h4>المزارع والنسخ</h4></div><div id="frmL"></div><button class="btn btn-outline-danger w-100 mt-3 rounded-pill" onclick="exportDB()">نسخة احتياطية JSON</button></div>
 
@@ -97,7 +113,7 @@
     let activeOpT = ''; let editingIdx = -1; let currentImgData = "";
 
     function showNotify(msg) { const t = document.getElementById('toast'); t.innerText = msg; t.style.display = 'block'; setTimeout(() => { t.style.display = 'none'; }, 3000); }
-    function sync() { try { localStorage.setItem(ST_KEY, JSON.stringify(db)); } catch(e) { showNotify("الذاكرة ممتلئة! احذف بعض الصور القديمة."); } }
+    function sync() { try { localStorage.setItem(ST_KEY, JSON.stringify(db)); } catch(e) { showNotify("الذاكرة ممتلئة! احذف صور قديمة."); } }
     function openPage(id) { document.querySelectorAll('.page-full').forEach(p => p.classList.remove('active')); document.getElementById(id).classList.add('active'); if(id==='archivePage') renderArch(); if(id==='staffPage') renderStaff(); if(id==='zonesPage') renderZones(); if(id==='stockPage') renderStk(); if(id==='financePage') renderFin(); if(id==='toolsPage') renderTools(); if(id==='farmsPage') renderFrms(); }
     function goHome() { document.querySelectorAll('.page-full').forEach(p => p.classList.remove('active')); renderHome(); editingIdx = -1; currentImgData=""; }
 
@@ -107,7 +123,7 @@
         activeOpT = op; editingIdx = idx;
         document.getElementById('opTitleHeader').innerText = (idx===-1?'':'تعديل ') + op;
         const area = document.getElementById('opFields'); area.innerHTML = '';
-        const fSection = document.getElementById('fertilizerSection'); fSection.style.display = 'none';
+        const fSec = document.getElementById('fertilizerSection'); fSec.style.display = 'none';
         
         let existingMsg = idx !== -1 ? db.farms[db.cur].logs[idx].m : "";
         currentImgData = idx !== -1 ? (db.farms[db.cur].logs[idx].img || "") : "";
@@ -116,13 +132,13 @@
         let zones = (db.farms[db.cur].zones || []).map(z => `<option value="${z.n}">${z.n}</option>`).join('');
 
         if(op === 'ري' || op === 'تسميد') {
-            area.innerHTML = `<label class="small fw-bold">اختر الحوض:</label><select id="vZone" class="form-select mb-3">${zones || '<option>لا توجد أحواض</option>'}</select>`;
-            if(op === 'تسميد') { fSection.style.display = 'block'; document.getElementById('fRows').innerHTML = ''; addFertilizerRow(); }
+            area.innerHTML = `<label class="small fw-bold">الحوض:</label><select id="vZone" class="form-select mb-3">${zones || '<option>لا توجد أحواض</option>'}</select>`;
+            if(op === 'تسميد') { fSec.style.display = 'block'; document.getElementById('fRows').innerHTML = ''; addFertilizerRow(); }
             else { area.innerHTML += `<textarea id="vText" class="form-control" rows="4" placeholder="ملاحظات..">${existingMsg}</textarea>`; }
         } else if(op === 'حصاد') {
             area.innerHTML = `<input type="number" id="v1" class="form-control" value="${existingMsg.match(/\d+/)||''}" placeholder="كجم">`;
         } else {
-            area.innerHTML = `<textarea id="vText" class="form-control" rows="8" placeholder="اكتب التفاصيل هنا..">${existingMsg}</textarea>`;
+            area.innerHTML = `<textarea id="vText" class="form-control" rows="8" placeholder="تفاصيل..">${existingMsg}</textarea>`;
         }
         openPage('opPage');
     }
@@ -141,18 +157,17 @@
                 let n = row.querySelector('.f-name').value, q = parseFloat(row.querySelector('.f-qty').value);
                 if(n && q) { if(editingIdx===-1) f.stock[n]-=q; items.push(`${n}(${q})`); }
             });
-            if(items.length===0) return showNotify("أكمل بيانات التسميد"); msg = `تسميد خلطة [${vZ}]: ` + items.join(' + ');
+            if(items.length===0) return showNotify("أكمل البيانات"); msg = `تسميد خلطة [${vZ}]: ` + items.join(' + ');
         } else if(activeOpT === 'حصاد') {
             let q = parseFloat(document.getElementById('v1')?.value || 0); if(editingIdx===-1) f.kg += q; msg = `حصاد ${q} كجم`;
         } else {
-            msg = document.getElementById('vText')?.value || "";
-            if(activeOpT === 'ري') msg = `ري [${vZ}]: ` + msg;
+            msg = document.getElementById('vText')?.value || ""; if(activeOpT === 'ري') msg = `ري [${vZ}]: ` + msg;
         }
 
         if(editingIdx === -1) f.logs.push({ d: new Date().toLocaleString('ar-EG'), t: activeOpT, m: msg, img: currentImgData });
         else { f.logs[editingIdx].m = msg; f.logs[editingIdx].img = currentImgData; }
         
-        sync(); goHome(); showNotify("تم حفظ " + activeOpT + " بنجاح");
+        sync(); goHome(); showNotify("تم حفظ " + activeOpT);
     }
 
     function renderArch() {
@@ -167,10 +182,11 @@
         `).reverse().join('');
     }
 
-    // إدارة العمالة والأحواض والمخازن (مستقرة)
+    // إدارة العمالة والأحواض والمخازن
     function logWorker(s) { let n=document.getElementById('wNameIn').value, r=document.getElementById('wRate').value, sd=document.getElementById('wStartDate').value; if(!n||!r) return; db.farms[db.cur].staff.push({n,s,r:parseFloat(r),start:sd||'2026-01-01',d:new Date().toISOString()}); sync(); renderStaff(); }
     function renderStaff() {
-        let res = {}; db.farms[db.cur].staff.forEach(e => { if(!res[e.n]) { let d1=new Date(e.start); let diff=isNaN(d1.getTime())?1:Math.floor((new Date()-d1)/86400000)+1; res[e.n]={ح:0,غ:0,r:e.r,total:diff}; } if(e.s==='حضور') res[e.n].ح++; else res[e.n].غ++; });
+        let res = {}; let list = document.getElementById('workersList'); list.innerHTML='';
+        db.farms[db.cur].staff.forEach(e => { if(!res[e.n]) { let d1=new Date(e.start); let diff=isNaN(d1.getTime())?1:Math.floor((new Date()-d1)/86400000)+1; res[e.n]={ح:0,غ:0,r:e.r,total:diff}; list.innerHTML+=`<option value="${e.n}">`; } if(e.s==='حضور') res[e.n].ح++; else res[e.n].غ++; });
         document.getElementById('wTable').innerHTML = Object.keys(res).map(n => `<tr><td>${n}</td><td>${res[n].total} يوم</td><td>${res[n].ح}</td><td>${res[n].غ}</td><td>${res[n].ح*res[n].r} ج</td><td><button class="btn btn-sm btn-warning" onclick="editW('${n}')">تعديل</button></td></tr>`).join('');
     }
     function editW(n) { let p=prompt("حضور:"), a=prompt("غياب:"); if(p==null||a==null)return; let workers=db.farms[db.cur].staff.filter(w=>w.n===n); if(workers.length>0){ let b=workers[0]; db.farms[db.cur].staff=db.farms[db.cur].staff.filter(w=>w.n!==n); for(let i=0;i<parseInt(p);i++) db.farms[db.cur].staff.push({...b,s:'حضور'}); for(let i=0;i<parseInt(a);i++) db.farms[db.cur].staff.push({...b,s:'غياب'}); sync(); renderStaff(); } }
@@ -187,9 +203,9 @@
     function renderFin() { document.getElementById('fL').innerHTML=(db.farms[db.cur].fin||[]).map(m=>`<div class="panel-glass d-flex justify-content-between small"><b>${m.d}</b><span class="${m.a>0?'text-success':'text-danger'}">${m.a}</span></div>`).reverse().join(''); }
     function renderHome() { const f=db.farms[db.cur]; document.getElementById('hFarmName').innerText=f.name; document.getElementById('vKg').innerText=f.kg; document.getElementById('vStk').innerText=Object.keys(f.stock).length; let c=0; (f.fin||[]).forEach(i=>c+=i.a); document.getElementById('vCash').innerText=c; }
     function genReport() { let h=`<div dir="rtl" style="padding:20px;"><h2>تقرير المهندس سامي</h2><table border="1" style="width:100%; border-collapse:collapse;"><tr><th>التاريخ</th><th>العملية</th><th>التفاصيل</th></tr>`; (db.farms[db.cur].logs||[]).forEach(l=>{ h+=`<tr><td>${l.d}</td><td>${l.t}</td><td>${l.m} ${l.img?`<br><img src="${l.img}" style="width:100px;">`:''}</td></tr>`; }); html2pdf().from(h+"</table></div>").save(`AgroReport_Samy.pdf`); }
-    function exportDB() { const b=new Blob([JSON.stringify(db)], {type:"application/json"}); const a=document.createElement('a'); a.href=URL.createObjectURL(b); a.download=`Mazar3i_Backup.json`; a.click(); }
+    function exportDB() { const b = new Blob([JSON.stringify(db)], {type:"application/json"}); const a = document.createElement('a'); a.href=URL.createObjectURL(b); a.download=`Mazar3i_Backup.json`; a.click(); }
     function renderFrms() { document.getElementById('frmL').innerHTML=Object.keys(db.farms).map(id=>`<div class="panel-glass ${id===db.cur?'border-success border':''}" onclick="selFrm('${id}')"><b>${db.farms[id].name}</b></div>`).join(''); }
-    function selFrm(id) { db.cur=id; sync(); goHome(); }
+    function selFrm(id) { db.cur = id; sync(); goHome(); }
 
     navigator.geolocation.getCurrentPosition(p => { fetch(`https://api.open-meteo.com/v1/forecast?latitude=${p.coords.latitude}&longitude=${p.coords.longitude}&current_weather=true`).then(r=>r.json()).then(d=>{ document.getElementById('hWeather').innerText=`حرارة المزرعة: ${d.current_weather.temperature}°C`; }); });
     renderHome();
