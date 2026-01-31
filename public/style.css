@@ -1,0 +1,58 @@
+/* تنسيق منصة المهندسين الزراعيين */
+:root {
+    --primary-green: #2e7d32; /* لون الزراعة والنمو */
+    --accent-gold: #f9a825;  /* لون الحصاد والشمس */
+    --bg-light: #f8f9fa;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--bg-light);
+    margin: 0;
+    padding: 20px;
+    direction: rtl; /* لضمان التنسيق العربي الصحيح */
+}
+
+/* شعار المهندسين */
+.header-brand {
+    text-align: center;
+    padding: 30px;
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    margin-bottom: 25px;
+    border-top: 5px solid var(--primary-green);
+}
+
+.logo-icon {
+    font-size: 50px;
+    margin-bottom: 10px;
+}
+
+/* بطاقة المزرعة (مثل آل سفيان) */
+.farm-card {
+    background: white;
+    border-radius: 15px;
+    padding: 25px;
+    max-width: 550px;
+    margin: auto;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+}
+
+.btn-engineer {
+    background: var(--primary-green);
+    color: white;
+    border: none;
+    padding: 15px;
+    border-radius: 10px;
+    width: 100%;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.btn-engineer:hover {
+    background: #1b5e20;
+    transform: translateY(-2px);
+}
