@@ -4,39 +4,50 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>منصة المهندسين لإدارة المشروعات الزراعية</title>
-    <link rel="stylesheet" href="/style.css">
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.23/jspdf.plugin.autotable.min.js"></script>
+
+    <style>
+        :root { --primary: #2e7d32; --secondary: #1976d2; --accent: #e67e22; --bg: #f4f7f6; }
+        body { font-family: 'Segoe UI', Tahoma, sans-serif; background: var(--bg); margin: 0; padding: 20px; direction: rtl; }
+        .header { text-align: center; padding: 20px; background: white; border-radius: 15px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); margin-bottom: 20px; border-top: 5px solid var(--primary); }
+        .logo-img { width: 60px; height: 60px; margin-bottom: 10px; }
+        .card { background: white; border-radius: 15px; padding: 25px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); max-width: 600px; margin: auto; }
+        .btn { border: none; padding: 12px; border-radius: 8px; width: 100%; cursor: pointer; font-size: 16px; font-weight: bold; color: white; margin-top: 10px; transition: 0.3s; }
+        .btn-fert { background: var(--primary); }
+        .btn-attend { background: var(--secondary); }
+        .btn-pdf { background: var(--accent); margin-top: 30px; }
+        .btn:hover { opacity: 0.9; transform: translateY(-2px); }
+        .list-item { background: #f9f9f9; padding: 12px; border-radius: 8px; margin-bottom: 10px; border-right: 4px solid var(--primary); }
+        h3 { color: #444; border-bottom: 1px solid #eee; padding-bottom: 10px; }
+    </style>
 </head>
 <body>
 
     <header class="header">
-        <div class="logo-container">
-            <img src="https://cdn-icons-png.flaticon.com/512/2840/2840784.png" alt="شعار المهندسين" class="logo-img">
-            <div>
-                <h1 class="app-title">منصة المهندسين الزراعيين</h1>
-                <p class="app-subtitle">نظام المتابعة الميدانية الذكي</p>
-            </div>
-        </div>
+        <img src="https://cdn-icons-png.flaticon.com/512/2840/2840784.png" class="logo-img">
+        <h1 style="margin:0; color:var(--primary);">منصة المهندسين الزراعيين</h1>
+        <p style="color:#666;">نظام الإدارة الرقمي للمواقع والمزارع</p>
     </header>
 
     <div class="card">
-        <h2>📍 بيانات الموقع</h2>
-        <p>مشروع: <span id="farmTitle" style="color: #2e7d32; font-weight: bold;">جاري التحميل...</span></p>
+        <h2>📍 الموقع الحالي</h2>
+        <p>المشروع: <span id="farmTitle" style="color:var(--primary); font-weight:bold;">جاري التحميل...</span></p>
         
-        <hr style="margin: 20px 0; border: 0; border-top: 1px solid #eee;">
-
         <section>
             <h3>🧪 سجل العمليات (تسميد/ري)</h3>
-            <button class="btn" onclick="addEntry('fertilizer')">➕ تسجيل عملية جديدة</button>
-            <div id="fertilizerList" style="margin-top: 15px;"></div>
+            <button class="btn btn-fert" onclick="addEntry('fertilizer')">➕ تسجيل عملية ميدانية</button>
+            <div id="fertilizerList" style="margin-top:15px;"></div>
         </section>
 
-        <hr style="margin: 20px 0; border: 0; border-top: 1px solid #eee;">
-
-        <section>
+        <section style="margin-top:30px;">
             <h3>👥 سجل حضور العمال</h3>
-            <button class="btn" style="background: #1976d2;" onclick="addEntry('attendance')">📝 تسجيل حضور عامل</button>
-            <div id="attendanceList" style="margin-top: 15px;"></div>
+            <button class="btn btn-attend" onclick="addEntry('attendance')">📝 تسجيل حضور عامل</button>
+            <div id="attendanceList" style="margin-top:15px;"></div>
         </section>
+
+        <button class="btn btn-pdf" onclick="generatePDFReport()">📥 تحميل تقرير PDF للأستاذ محمد</button>
     </div>
 
     <script src="/script.js"></script>
