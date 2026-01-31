@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>إدارة مزارع آل سفيان</title>
+    <style>
+        body { font-family: 'Segoe UI', Arial, sans-serif; background: #f4f7f6; padding: 20px; }
+        .card { background: white; border-radius: 15px; padding: 25px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); max-width: 500px; margin: auto; text-align: center; }
+        h1 { color: #2e7d32; }
+        #farmTitle { color: #1b5e20; font-weight: bold; border-bottom: 2px solid #2e7d32; }
+        .btn { background: #2e7d32; color: white; border: none; padding: 12px; border-radius: 8px; width: 100%; cursor: pointer; font-size: 18px; margin-top: 20px; }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h1>🌱 لوحة إدارة المزرعة</h1>
+        <p>مرحباً بك في نظام الإدارة الرقمي لـ: <span id="farmTitle">جاري التحميل...</span></p>
+        <button class="btn" onclick="addActivity()">➕ تسجيل نشاط جديد</button>
+        <div id="activitiesList" style="margin-top: 20px; text-align: right;"></div>
+    </div>
+    <script src="/script.js"></script>
+</body>
+</html>
