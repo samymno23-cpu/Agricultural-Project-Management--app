@@ -10,23 +10,33 @@
 
     <header class="header">
         <div class="logo-container">
-            <img src="https://cdn-icons-png.flaticon.com/512/2840/2840784.png" alt="شعار المهندسين الزراعيين" class="logo-img">
+            <img src="https://cdn-icons-png.flaticon.com/512/2840/2840784.png" alt="شعار المهندسين" class="logo-img">
             <div>
-                <h1 class="app-title">منصة المهندسين</h1>
-                <p class="app-subtitle">لإدارة المشروعات الزراعية الذكية</p>
+                <h1 class="app-title">منصة المهندسين الزراعيين</h1>
+                <p class="app-subtitle">نظام المتابعة الميدانية الذكي</p>
             </div>
         </div>
     </header>
 
     <div class="card">
-        <h2>🌱 لوحة المتابعة</h2>
-        <p>مرحباً بك في نظام الإدارة الرقمي لـ: <span id="farmTitle">جاري التحميل...</span></p>
+        <h2>📍 بيانات الموقع</h2>
+        <p>مشروع: <span id="farmTitle" style="color: #2e7d32; font-weight: bold;">جاري التحميل...</span></p>
         
-        <div id="activitiesList" style="margin-top: 30px; text-align: right;">
-            <p style="color: #888;">لا توجد أنشطة مسجلة اليوم.</p>
-        </div>
+        <hr style="margin: 20px 0; border: 0; border-top: 1px solid #eee;">
 
-        <button class="btn" onclick="addActivity()" style="margin-top: 30px;">➕ تسجيل نشاط ميداني جديد</button>
+        <section>
+            <h3>🧪 سجل العمليات (تسميد/ري)</h3>
+            <button class="btn" onclick="addEntry('fertilizer')">➕ تسجيل عملية جديدة</button>
+            <div id="fertilizerList" style="margin-top: 15px;"></div>
+        </section>
+
+        <hr style="margin: 20px 0; border: 0; border-top: 1px solid #eee;">
+
+        <section>
+            <h3>👥 سجل حضور العمال</h3>
+            <button class="btn" style="background: #1976d2;" onclick="addEntry('attendance')">📝 تسجيل حضور عامل</button>
+            <div id="attendanceList" style="margin-top: 15px;"></div>
+        </section>
     </div>
 
     <script src="/script.js"></script>
